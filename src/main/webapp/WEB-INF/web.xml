@@ -20,7 +20,7 @@
         </param-value>
 	</context-param>
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.jboss.tools.example.projeto.listener.ContextLoaderListenerImpl</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>jboss-as-kitchensink</servlet-name>
@@ -31,7 +31,6 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
 
 	<context-param>
 		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
