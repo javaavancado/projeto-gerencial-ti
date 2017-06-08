@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Cadastro de Usuário">
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Código: " />
+				<p:inputText id="id" readonly="true" value="#{userManageBean.member.id}"/>
+				<p:message for="id"/>
+
+				<p:outputLabel value="Nome: " />
+				<p:inputText id="nome" value="#{userManageBean.member.name}"  required="true" requiredMessage="Informe o nome."/>
+				<p:message for="nome"/>
+		
+				<p:outputLabel value="E-mail: " />
+				<p:inputText id="email" value="#{userManageBean.member.email}" required="true" requiredMessage="Informe o e-mail."/>
+				<p:message for="email"/>
+				
+				<p:outputLabel value="Telefone: " />
+				<p:inputText id="fone" value="#{userManageBean.member.phoneNumber}" required="true" requiredMessage="Informe o telefone."/>
+			    <p:message for="fone"/>
+			</p:panelGrid>
+		</p:panel>
+		<p:commandButton value="Salvar" ajax="false" action="#{userManageBean.salvar()}"/>
+	</h:form>
+</h:body>
+</html>
