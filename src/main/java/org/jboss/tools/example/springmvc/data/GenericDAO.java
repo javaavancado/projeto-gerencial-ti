@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class GenericDAO<T> {
+abstract class GenericDAO<T> {
 
 	@Autowired
 	@PersistenceContext

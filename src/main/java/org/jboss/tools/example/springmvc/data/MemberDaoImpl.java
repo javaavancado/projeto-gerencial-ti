@@ -56,4 +56,9 @@ public class MemberDaoImpl extends GenericDAO<Member> implements MemberDao {
         em.persist(member);
         return;
     }
+
+	@Override
+	public Member merge(Member member) {
+		return super.em.merge(member);
+	}
 }
