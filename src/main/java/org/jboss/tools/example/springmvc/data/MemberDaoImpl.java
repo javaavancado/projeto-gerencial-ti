@@ -26,7 +26,7 @@ import org.jboss.tools.example.springmvc.model.Member;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+@Repository("memberDao")
 @Transactional
 public class MemberDaoImpl extends GenericDAO<Member> implements MemberDao {
 	
