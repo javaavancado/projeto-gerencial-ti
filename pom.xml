@@ -21,6 +21,12 @@
 	<repositories>
 
 		<repository>
+			<id>spring-milestone</id>
+			<name>Spring Milestone Repository</name>
+			<url>http://repo.spring.io/milestone</url>
+		</repository>
+
+		<repository>
 			<id>spring-snapshot</id>
 			<name>Spring Snapshot Repository</name>
 			<url>https://repo.spring.io/snapshot</url>
@@ -81,6 +87,18 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>4.3.9.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>org.jboss.bom.wfk</groupId>
 				<artifactId>jboss-javaee-6.0-with-spring4.1</artifactId>
@@ -276,6 +294,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
+			<version>2.5.2</version>
 		</dependency>
 
 		<dependency>
@@ -340,7 +359,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-		</dependency>
+			</dependency>
 
 	</dependencies>
 
