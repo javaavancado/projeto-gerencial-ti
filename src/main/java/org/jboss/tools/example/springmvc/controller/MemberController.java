@@ -47,7 +47,7 @@ public class MemberController {
     public String registerNewMember(@Valid @ModelAttribute("newMember") Member newMember, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             try {
-                memberDao.register(newMember);
+                memberDao.persistir(newMember);
                 return "redirect:/";
             } catch (UnexpectedRollbackException e) {
                 model.addAttribute("members", memberDao.findAllOrderedByName());

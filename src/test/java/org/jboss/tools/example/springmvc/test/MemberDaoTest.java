@@ -81,7 +81,7 @@ public class MemberDaoTest {
 		member.setName("Jane Doe");
 		member.setPhoneNumber("2125552121");
 
-		memberDao.register(member);
+		memberDao.persistir(member);
 		Long id = member.getId();
 		assertNotNull(id);
 
@@ -98,7 +98,7 @@ public class MemberDaoTest {
 		member.setEmail("jane.doe@mailinator.com");
 		member.setName("Jane Doe");
 		member.setPhoneNumber("2125552121");
-		memberDao.register(member);
+		memberDao.persistir(member);
 
 		List<Member> members = memberDao.findAllOrderedByName();
 

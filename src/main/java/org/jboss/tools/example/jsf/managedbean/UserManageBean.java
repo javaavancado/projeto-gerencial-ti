@@ -17,7 +17,7 @@ public class UserManageBean {
 	private MemberDao memberDao;
 
 	public String salvar() {
-		memberDao.register(member);
+		memberDao.persistir(member);
 		member = new Member();
 		return "/cadastro/member.jsf";
 	}

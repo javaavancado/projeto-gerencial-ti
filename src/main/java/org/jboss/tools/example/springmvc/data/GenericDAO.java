@@ -5,10 +5,12 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
+@EnableTransactionManagement
 abstract class GenericDAO<T> {
 
 	@Autowired

@@ -24,10 +24,12 @@ import javax.persistence.criteria.Root;
 
 import org.jboss.tools.example.springmvc.model.Member;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository("memberDao")
 @Transactional
+@EnableTransactionManagement
 public class MemberDaoImpl extends GenericDAO<Member> implements MemberDao {
 	
     public Member findById(Long id) {
@@ -52,13 +54,12 @@ public class MemberDaoImpl extends GenericDAO<Member> implements MemberDao {
         return em.createQuery(criteria).getResultList();
     }
 
-    public void register(Member member) {
+    public void persistir(Member member) {
         em.persist(member);
-        return;
     }
 
 	@Override
 	public Member merge(Member member) {
-		return super.em.merge(member);
+		return em.merge(member);
 	}
 }

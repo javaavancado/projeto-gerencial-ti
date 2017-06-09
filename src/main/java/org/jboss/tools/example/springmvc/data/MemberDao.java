@@ -27,7 +27,7 @@ public interface MemberDao {
 
     public List<Member> findAllOrderedByName();
 
-    public void register(Member member);
+    public void persistir(Member member);
     
     public Member merge(Member member);
 }
