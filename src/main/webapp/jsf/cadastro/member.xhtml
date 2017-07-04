@@ -25,6 +25,11 @@
 				<p:outputLabel value="Telefone: " />
 				<p:inputText id="fone" value="#{userManageBean.member.phoneNumber}" required="true" requiredMessage="Informe o telefone."/>
 			    <p:message for="fone"/>
+			    
+			    <p:outputLabel value="Foto" for="foto" />
+				  <p:fileUpload id="foto" fileUploadListener="#{userManageBean.handleFileUpload}" mode="advanced"
+                     auto="true" sizeLimit="900000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+			    <p:message for="foto"/>
 			</p:panelGrid>
 		</p:panel>
 		<p:commandButton value="Salvar" ajax="false" action="#{userManageBean.salvar()}"/>
