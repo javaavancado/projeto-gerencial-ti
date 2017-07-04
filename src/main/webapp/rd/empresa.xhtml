@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Cadastro de Empresa">
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Código: " />
+				<p:inputText id="id" readonly="true" value="#{empresaManageBean.empresa.id}"/>
+				<p:message for="id"/>
+
+				<p:outputLabel value="Nome: " />
+				<p:inputText id="nome" value="#{empresaManageBean.empresa.nome}"  required="true" requiredMessage="Informe o nome."/>
+				<p:message for="nome"/>
+			    
+			</p:panelGrid>
+		</p:panel>
+		<p:commandButton value="Salvar" ajax="false" action="#{empresaManageBean.salvar()}"/>
+	</h:form>
+</h:body>
+</html>
