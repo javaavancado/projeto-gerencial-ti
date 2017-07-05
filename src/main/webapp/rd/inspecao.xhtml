@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Inspeção da Empresa">
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Código: " />
+				<p:inputText id="id" readonly="true" value="#{inspecaoManageBean.inspecao.id}"/>
+				<p:message for="id"/>
+
+				<p:outputLabel value="Empresa: " />
+				<p:selectOneMenu id="empresa" value="#{inspecaoManageBean.inspecao.empresa}"
+					required="true" requiredMessage="Informe a empresa.">
+				    <f:converter converterId="empresaConverter"/>
+					<f:selectItems var="emp" value="#{inspecaoManageBean.listaComboBox()}" 
+					itemValue="#{emp}" itemLabel="#{emp.nome}"/>
+				</p:selectOneMenu>
+				<p:message for="empresa"/>
+				
+				<p:outputLabel value="Data: " />
+				<p:calendar id="dataInspecao" value="#{inspecaoManageBean.inspecao.dataInspecao}" 
+					pattern="dd/MM/yyyy HH:mm:ss" required="true" requiredMessage="Infoma a data de inspeção.">
+					<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm:ss"
+						dateStyle="long" timeStyle="full" timeZone="GMT-03:00"/>
+				</p:calendar>
+				<p:message for="dataInspecao"/>
+				
+				<p:outputLabel value="Local: " />
+				<p:inputText id="local" value="#{inspecaoManageBean.inspecao.local}" 
+						required="true" requiredMessage="Informe o local da inspeção."/>
+				<p:message for="local"/>
+				
+				<p:outputLabel value="Produto: " />
+				<p:inputText id="produto" value="#{inspecaoManageBean.inspecao.produto}" 
+				  required="true" requiredMessage="Informe o produto."/>
+				<p:message for="produto"/>
+				
+				<p:outputLabel value="Reprovado: " />
+				<p:inputNumber id="reprovado" value="#{inspecaoManageBean.inspecao.reprovado}" 
+					required="true" requiredMessage="Informe a quantidade reprovada."/>
+				<p:message for="reprovado"/>
+				
+				<p:outputLabel value="Aprovado: " />
+				<p:inputNumber id="aprovado" value="#{inspecaoManageBean.inspecao.aprovado}" 
+					required="true" requiredMessage="Informe a quantidade aprovada."/>
+				<p:message for="aprovado"/>
+				
+				<p:outputLabel value="Liberação Condicional: " />
+				<p:inputNumber id="liberadoCondicional" value="#{inspecaoManageBean.inspecao.liberadoCondicional}" 
+					required="true" requiredMessage="Informe a quantidade com liberação condicional."/>
+				<p:message for="liberadoCondicional"/>
+				
+				<p:outputLabel value="Não Inspecionado: " />
+				<p:inputNumber id="naoInspecionado" value="#{inspecaoManageBean.inspecao.naoInspecionado}" 
+					required="true" requiredMessage="Informe a quantidade não inspecionada."/>
+				<p:message for="naoInspecionado"/>
+			    
+			</h:panelGrid>
+		</p:panel>
+		
+		<p:spacer height="50px"/>
+		
+		<p:commandButton value="Salvar" update="@form"
+			ajax="false" action="#{inspecaoManageBean.salvar()}"/>
+	</h:form>
+</h:body>
+</html>
