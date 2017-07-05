@@ -19,7 +19,7 @@
 					required="true" requiredMessage="Informe a empresa.">
 				    <f:converter converterId="empresaConverter"/>
 					<f:selectItems var="emp" value="#{inspecaoManageBean.listaComboBox()}" 
-					itemValue="#{emp}" itemLabel="#{emp.nome}"/>
+					itemValue="#{emp}" itemLabel="#{emp.description}"/>
 				</p:selectOneMenu>
 				<p:message for="empresa"/>
 				
