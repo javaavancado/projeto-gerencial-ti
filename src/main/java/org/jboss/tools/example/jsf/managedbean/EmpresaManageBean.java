@@ -18,7 +18,13 @@ public class EmpresaManageBean {
 
 	public String salvar() {
 		empresa = empresaDAO.merge(empresa);
+		novo();
 		return "";
+	}
+	
+	
+	public void novo(){
+		empresa = new Empresa();
 	}
 
 	public void setEmpresa(Empresa empresa) {

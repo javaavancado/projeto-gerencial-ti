@@ -9,18 +9,41 @@
 <h:body>
 	<h:form>
 		<p:panel header="Cadastro de Empresa">
-			<p:panelGrid columns="3">
+			<h:panelGrid columns="3">
 				<p:outputLabel value="Código: " />
 				<p:inputText id="id" readonly="true" value="#{empresaManageBean.empresa.id}"/>
 				<p:message for="id"/>
 
 				<p:outputLabel value="Nome: " />
-				<p:inputText id="nome" value="#{empresaManageBean.empresa.nome}"  required="true" requiredMessage="Informe o nome."/>
+				<p:inputText id="nome" value="#{empresaManageBean.empresa.nome}"  
+					required="true" requiredMessage="Informe o nome."/>
 				<p:message for="nome"/>
+				
+				<p:outputLabel value="Ramo de Atividade: " />
+				<p:inputText id="ramo" value="#{empresaManageBean.empresa.ramo_de_atividade}"  
+					required="true" requiredMessage="Informe o ramo de atividade."/>
+				<p:message for="ramo"/>
+				
+				<p:outputLabel value="Ativo: " />
+				<p:selectBooleanCheckbox id="ativo" value="#{empresaManageBean.empresa.status}" />
+				<p:message for="ativo"/>
+				
+				<p:outputLabel value="Tipo Fiscal: " />
+				<p:inputText id="tipoFiscal" value="#{empresaManageBean.empresa.tipoFiscal}" />
+				<p:message for="tipoFiscal"/>
+				
+				<p:outputLabel value="Responsável: " />
+				<p:inputText id="responsavel" value="#{empresaManageBean.empresa.responsavel}" 
+				required="true" requiredMessage="Informe o responsável"/>
+				<p:message for="responsavel"/>
 			    
-			</p:panelGrid>
+			</h:panelGrid>
 		</p:panel>
-		<p:commandButton value="Salvar" ajax="false" action="#{empresaManageBean.salvar()}"/>
+		
+		<p:spacer height="50px"/>
+		
+		<p:commandButton value="Salvar" update="@form"
+		ajax="true" action="#{empresaManageBean.salvar()}"/>
 	</h:form>
 </h:body>
 </html>
