@@ -33,4 +33,28 @@ public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO
 		return super.em.merge(inspecao);
 	}
 
+	@Override
+	public Number[] dadoGraficoPorProduto(Long codigoProduto) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select coalesce(sum(aprovado), 0) as aprovado, ");
+		sql.append("coalesce(sum(liberadocondicional), 0) as liberadocondicional, ");
+		sql.append("coalesce(sum(naoinspecionado), 0) as naoinspecionado, ");
+		sql.append("coalesce(sum(reprovado), 0) as reprovado ");
+		sql.append(" from   inspecao where  produto_id in (");
+		sql.append(codigoProduto);
+		sql.append(");");
+
+		Object[] resultado = (Object[]) super.em.createNativeQuery(sql.toString()).getSingleResult();
+		if (resultado != null && resultado.length > 0) {
+			Number[] numbers = new Number[resultado.length];
+			numbers[0] = Integer.valueOf(resultado[0].toString());
+			numbers[1] = Integer.valueOf(resultado[1].toString());
+			numbers[2] = Integer.valueOf(resultado[3].toString());
+			numbers[3] = Integer.valueOf(resultado[3].toString());
+			return numbers;
+		}
+		return null;
+
+	}
+
 }

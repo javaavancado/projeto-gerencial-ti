@@ -7,7 +7,7 @@
 
 <h:head></h:head>
 <h:body>
-	<h:form>
+	<h:form id="formInspecao">
 		<p:panel header="Inspeção da Empresa">
 			<h:panelGrid columns="3">
 				<p:outputLabel value="Código: " />
@@ -23,6 +23,16 @@
 				</p:selectOneMenu>
 				<p:message for="empresa"/>
 				
+				
+				<p:outputLabel value="Produto: " />
+				<p:selectOneMenu id="produto" value="#{inspecaoManageBean.inspecao.produto}"
+					required="true" requiredMessage="Informe o produto.">
+				    <f:converter converterId="produtoConverter"/>
+					<f:selectItems var="emp" value="#{produtoManageBean.listaProduto()}" 
+					itemValue="#{emp}" itemLabel="#{emp.description}"/>
+				</p:selectOneMenu>
+				<p:message for="produto"/>
+				
 				<p:outputLabel value="Data: " />
 				<p:calendar id="dataInspecao" value="#{inspecaoManageBean.inspecao.dataInspecao}" 
 					pattern="dd/MM/yyyy HH:mm:ss" required="true" requiredMessage="Infoma a data de inspeção.">
@@ -35,11 +45,6 @@
 				<p:inputText id="local" value="#{inspecaoManageBean.inspecao.local}" 
 						required="true" requiredMessage="Informe o local da inspeção."/>
 				<p:message for="local"/>
-				
-				<p:outputLabel value="Produto: " />
-				<p:inputText id="produto" value="#{inspecaoManageBean.inspecao.produto}" 
-				  required="true" requiredMessage="Informe o produto."/>
-				<p:message for="produto"/>
 				
 				<p:outputLabel value="Reprovado: " />
 				<p:inputNumber id="reprovado" value="#{inspecaoManageBean.inspecao.reprovado}" 
@@ -66,8 +71,8 @@
 		
 		<p:spacer height="50px"/>
 		
-		<p:commandButton value="Salvar" update="@form"
-			ajax="false" action="#{inspecaoManageBean.salvar()}"/>
+		<p:commandButton value="Salvar" update="@form tabMenu:formGrafico"
+			ajax="true" actionListener="#{inspecaoManageBean.salvar()}"/>
 	</h:form>
 </h:body>
 </html>

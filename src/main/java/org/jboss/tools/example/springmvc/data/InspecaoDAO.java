@@ -7,4 +7,6 @@ import org.jboss.tools.example.springmvc.model.rd.Inspecao;
 public interface InspecaoDAO extends Serializable{
 
 	public Inspecao merge (Inspecao inspecao);
+
+	public Number[] dadoGraficoPorProduto(Long id);
 }

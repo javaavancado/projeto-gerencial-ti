@@ -29,12 +29,14 @@ public class Inspecao implements Serializable {
 	@JoinColumn(referencedColumnName = "id", name = "empresa_id", nullable = false)
 	private Empresa empresa = new Empresa();
 
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id", name = "produto_id", nullable = false)
+	private Produto produto = new Produto();
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataInspecao;
 
 	private String local;
-
-	private String produto;
 
 	private Integer reprovado = 0;
 
@@ -76,14 +78,6 @@ public class Inspecao implements Serializable {
 		this.local = local;
 	}
 
-	public String getProduto() {
-		return produto;
-	}
-
-	public void setProduto(String produto) {
-		this.produto = produto;
-	}
-
 	public Integer getReprovado() {
 		return reprovado;
 	}
@@ -114,6 +108,14 @@ public class Inspecao implements Serializable {
 
 	public void setNaoInspecionado(Integer naoInspecionado) {
 		this.naoInspecionado = naoInspecionado;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Produto getProduto() {
+		return produto;
 	}
 
 	@Override

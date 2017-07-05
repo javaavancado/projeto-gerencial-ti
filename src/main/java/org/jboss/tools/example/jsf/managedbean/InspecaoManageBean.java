@@ -2,6 +2,7 @@ package org.jboss.tools.example.jsf.managedbean;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -10,12 +11,19 @@ import javax.faces.model.SelectItem;
 import org.jboss.tools.example.springmvc.data.EmpresaDAO;
 import org.jboss.tools.example.springmvc.data.InspecaoDAO;
 import org.jboss.tools.example.springmvc.model.rd.Inspecao;
+import org.jboss.tools.example.springmvc.model.rd.Produto;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 
 @RequestScoped
 @ManagedBean(name = "inspecaoManageBean")
 public class InspecaoManageBean {
+	
+	private BarChartModel barModel = new BarChartModel();
 
 	private Inspecao inspecao = new Inspecao();
+	
+	private Produto produtoSelecionadoGrafico = new Produto();
 
 	@ManagedProperty(name = "inspecaoDAO", value = "#{inspecaoDAO}")
 	private InspecaoDAO inspecaoDAO;
@@ -33,8 +41,21 @@ public class InspecaoManageBean {
 		return empresaDAO.listaComboBox();
 	}
 
+	@PostConstruct
 	public void novo() {
 		inspecao = new Inspecao();
+		iniciarGrafico();
+	}
+
+	private void iniciarGrafico() {
+		ChartSeries dadoGrafico = new ChartSeries();
+        dadoGrafico.setLabel("Materiais");
+        dadoGrafico.set("Aprovado", 0);
+        dadoGrafico.set("Reprovado", 0);
+        dadoGrafico.set("Liberado Condicional", 0);
+        dadoGrafico.set("Não Inspecionado", 0);
+        barModel.addSeries(dadoGrafico);
+		
 	}
 
 	public Inspecao getInspecao() {
@@ -59,6 +80,36 @@ public class InspecaoManageBean {
 
 	public EmpresaDAO getEmpresaDAO() {
 		return empresaDAO;
+	}
+	
+	public void setProdutoSelecionadoGrafico(Produto produtoSelecionadoGrafico) {
+		this.produtoSelecionadoGrafico = produtoSelecionadoGrafico;
+	}
+	
+	public Produto getProdutoSelecionadoGrafico() {
+		return produtoSelecionadoGrafico;
+	}
+	
+	public BarChartModel getBarModel() {
+		return barModel;
+	}
+	
+	public void processarGraficoProduto() {
+		if (produtoSelecionadoGrafico != null && produtoSelecionadoGrafico.getId() != null) {
+			Number[] dados = inspecaoDAO.dadoGraficoPorProduto(produtoSelecionadoGrafico.getId());
+			if (dados != null) {
+				barModel = new BarChartModel();
+				ChartSeries dadoGrafico = new ChartSeries();
+				dadoGrafico.setLabel("Materiais");
+				dadoGrafico.set("Aprovado", dados[0].doubleValue());
+				dadoGrafico.set("Reprovado", dados[3].doubleValue());
+				dadoGrafico.set("Liberado Condicional", dados[1].doubleValue());
+				dadoGrafico.set("Não Inspecionado", dados[2].doubleValue());
+				barModel.addSeries(dadoGrafico);
+			}else {
+				iniciarGrafico();
+			}
+		}
 	}
 
 }

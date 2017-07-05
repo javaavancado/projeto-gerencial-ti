@@ -7,7 +7,7 @@
 
 <h:head></h:head>
 <h:body>
-	<h:form>
+	<h:form id="formEmpresa">
 		<p:panel header="Cadastro de Empresa">
 			<h:panelGrid columns="3">
 				<p:outputLabel value="Código: " />
@@ -42,8 +42,8 @@
 		
 		<p:spacer height="50px"/>
 		
-		<p:commandButton value="Salvar" update="@form"
-		ajax="true" action="#{empresaManageBean.salvar()}"/>
+		<p:commandButton value="Salvar" update="@form tabMenu:formInspecao"
+		ajax="true" actionListener="#{empresaManageBean.salvar()}"/>
 	</h:form>
 </h:body>
 </html>

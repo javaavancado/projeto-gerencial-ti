@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<h:form id="formGrafico">
+		<p:panel header="Gráfico de inspeção">
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Produto: " />
+				<p:selectOneMenu id="produto" value="#{inspecaoManageBean.produtoSelecionadoGrafico}"
+					required="true" requiredMessage="Informe o produto.">
+				    <f:converter converterId="produtoConverter"/>
+				    <f:selectItem itemLabel="[Selecione]" itemValue="0" noSelectionOption="true" />
+					<f:selectItems var="emp" value="#{produtoManageBean.listaProduto()}" 
+					itemValue="#{emp}" itemLabel="#{emp.description}"/>
+					
+					<f:ajax listener="#{inspecaoManageBean.processarGraficoProduto()}"
+					 render="produtoSelecionado graficoProdutoSelecionado" execute="@this" />
+				</p:selectOneMenu>
+				<p:message for="produto"/>
+				
+			</h:panelGrid>
+			
+			<p:chart type="bar" model="#{inspecaoManageBean.barModel}" id="graficoProdutoSelecionado"
+			style="height:300px"/>
+		</p:panel>
+		    <p:spacer height="50px"/>
+			<p:outputLabel value="Produto Selecionado: " />
+			<h:outputLabel id="produtoSelecionado"
+			value="#{inspecaoManageBean.produtoSelecionadoGrafico.descricao}" />
+	</h:form>
+</h:body>
+</html>
