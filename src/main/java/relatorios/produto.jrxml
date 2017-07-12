@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1a5b5adb-7b18-4cf0-a4cc-3e5cc8980096">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     produto."id" AS produto_id,
+     produto."descricao" AS produto_descricao,
+     produto."tipoproduto" AS produto_tipoproduto
+FROM
+     "public"."produto" produto]]>
+	</queryString>
+	<field name="produto_id" class="java.lang.Long"/>
+	<field name="produto_descricao" class="java.lang.String"/>
+	<field name="produto_tipoproduto" class="java.lang.String"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="79" uuid="cc6c0637-35e3-4031-b2f7-68cb47b22c11"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="45"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="267" height="20" uuid="9308e098-db6f-409e-8c58-f498a04f1954"/>
+				<textFieldExpression><![CDATA[$F{produto_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="0" width="267" height="20" uuid="1d0a70c0-cb90-4c57-a582-0131e16081e4"/>
+				<textFieldExpression><![CDATA[$F{produto_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="0" width="267" height="20" uuid="045ac241-ff18-4900-a169-4cf675f48a55"/>
+				<textFieldExpression><![CDATA[$F{produto_tipoproduto}  == "MATERIA_PRIMA" ? "Matéria Prima" : "Produto pós acabado"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
