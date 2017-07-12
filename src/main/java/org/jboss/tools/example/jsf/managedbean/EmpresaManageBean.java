@@ -24,8 +24,8 @@ public class EmpresaManageBean {
 	private EmpresaDAO empresaDAO;
 	
 	public StreamedContent getFileRelatorio() throws Exception{
-		
-		reportUtil.setNomeRelatorioJasper(null);
+
+		reportUtil.setNomeRelatorioJasper("empresa");
 		reportUtil.setParametrosRelatorio(null);
 		reportUtil.setListDataBeanCollectionReport(null);
 		

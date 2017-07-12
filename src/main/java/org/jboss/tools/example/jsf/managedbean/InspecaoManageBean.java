@@ -1,17 +1,22 @@
 package org.jboss.tools.example.jsf.managedbean;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.jboss.tools.example.springmvc.data.EmpresaDAO;
 import org.jboss.tools.example.springmvc.data.InspecaoDAO;
 import org.jboss.tools.example.springmvc.model.rd.Inspecao;
 import org.jboss.tools.example.springmvc.model.rd.Produto;
+import org.jboss.tools.example.springmvc.relatorio.ReportUtil;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
@@ -19,11 +24,15 @@ import org.primefaces.model.chart.ChartSeries;
 @ManagedBean(name = "inspecaoManageBean")
 public class InspecaoManageBean {
 	
+	private ReportUtil reportUtil = new ReportUtil();
+	
 	private BarChartModel barModel = new BarChartModel();
 
 	private Inspecao inspecao = new Inspecao();
 	
 	private Produto produtoSelecionadoGrafico = new Produto();
+	
+	private List<Inspecao> inspecoes = new ArrayList<Inspecao>();
 
 	@ManagedProperty(name = "inspecaoDAO", value = "#{inspecaoDAO}")
 	private InspecaoDAO inspecaoDAO;
@@ -45,6 +54,7 @@ public class InspecaoManageBean {
 	public void novo() {
 		inspecao = new Inspecao();
 		iniciarGrafico();
+		inspecoes = inspecaoDAO.lista();
 	}
 
 	private void iniciarGrafico() {
@@ -110,6 +120,30 @@ public class InspecaoManageBean {
 				iniciarGrafico();
 			}
 		}
+	}
+	
+	
+	public StreamedContent getFileRelatorio() throws Exception{
+		reportUtil.setNomeRelatorioJasper("inspecao");
+		reportUtil.setListDataBeanCollectionReport(inspecaoDAO.lista());
+		return reportUtil.getArquivoReportStreamedContent();
+	}
+	
+	public StreamedContent getFileRelatorioUnico() throws Exception{
+		
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		
+		String inspecaoId = params.get("inspecaoId");
+		List<Inspecao> inspecaos = new ArrayList<Inspecao>();
+		inspecaos.add(inspecaoDAO.buscar(Long.parseLong(inspecaoId)));
+		
+		reportUtil.setNomeRelatorioJasper("inspecao");
+		reportUtil.setListDataBeanCollectionReport(inspecaos);
+		return reportUtil.getArquivoReportStreamedContent();
+	}
+	
+	public List<Inspecao> getInspecoes() {
+		return inspecoes;
 	}
 
 }

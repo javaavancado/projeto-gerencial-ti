@@ -77,18 +77,43 @@
 
 			<p:commandLink ajax="false" immediate="true"> 
 				<h:graphicImage library="gfx" name="pdf.ico" height="50" width="50" />
-				<p:fileDownload value="#{empresaManageBean.fileRelatorio}" />
+				<p:fileDownload value="#{inspecaoManageBean.fileRelatorio}" />
 				<f:param name="tipoRelatorio" value="1"/>
 			</p:commandLink>
 			
 			<p:commandLink ajax="false" immediate="true"> 
 				<h:graphicImage library="gfx" name="xls.ico" height="50" width="50" />
-				<p:fileDownload value="#{empresaManageBean.fileRelatorio}" />
+				<p:fileDownload value="#{inspecaoManageBean.fileRelatorio}" />
 				<f:param name="tipoRelatorio" value="2"/>
 			</p:commandLink>
 			
 		</h:panelGrid>
 
+	</h:form>
+
+	<h:form>
+		<p:dataTable var="insp" value="#{inspecaoManageBean.inspecoes}">
+			<p:column headerText="Id" width="100">
+				<h:outputText value="#{insp.id}" />
+			</p:column>
+			
+			<p:column headerText="Empresa">
+				<h:outputText value="#{insp.empresa.nome}" />
+			</p:column>
+			
+			<p:column headerText="Produto">
+				<h:outputText value="#{insp.produto.descricao}" />
+			</p:column>
+			
+			<p:column headerText="Pdf" width="60">
+				<p:commandLink ajax="false" immediate="true"> 
+				<h:graphicImage library="gfx" name="pdf.ico" height="50" width="50" />
+				<f:param name="inspecaoId" value="#{insp.id}"/>
+				<f:param name="tipoRelatorio" value="1"/>
+				<p:fileDownload value="#{inspecaoManageBean.fileRelatorioUnico}" />
+			</p:commandLink>
+			</p:column>
+		</p:dataTable>
 	</h:form>
 </h:body>
 </html>

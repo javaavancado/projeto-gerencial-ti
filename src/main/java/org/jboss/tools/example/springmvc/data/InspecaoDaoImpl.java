@@ -16,6 +16,8 @@
  */
 package org.jboss.tools.example.springmvc.data;
 
+import java.util.List;
+
 import org.jboss.tools.example.springmvc.model.rd.Inspecao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -55,6 +57,16 @@ public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO
 		}
 		return null;
 
+	}
+
+	@Override
+	public List<Inspecao> lista() {
+		return super.em.createQuery("from Inspecao ").getResultList();
+	}
+
+	@Override
+	public Inspecao buscar(Long codInspecao) {
+		return super.em.find(Inspecao.class, codInspecao);
 	}
 
 }
