@@ -45,4 +45,6 @@ public class EmpresaDaoImpl extends GenericDAO<Empresa> implements EmpresaDAO {
 		return retorno;
 	}
 
+	
+
 }

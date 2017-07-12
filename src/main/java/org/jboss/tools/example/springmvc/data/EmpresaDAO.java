@@ -16,4 +16,5 @@ public interface EmpresaDAO extends Serializable{
 	List<Empresa> lista();
 	
 	List<SelectItem> listaComboBox();
+
 }

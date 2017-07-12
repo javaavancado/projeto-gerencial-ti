@@ -11,6 +11,8 @@ import javax.faces.model.SelectItem;
 import org.jboss.tools.example.springmvc.data.ProdutoDAO;
 import org.jboss.tools.example.springmvc.enums.TipoProduto;
 import org.jboss.tools.example.springmvc.model.rd.Produto;
+import org.jboss.tools.example.springmvc.relatorio.ReportUtil;
+import org.primefaces.model.StreamedContent;
 
 @RequestScoped
 @ManagedBean(name = "produtoManageBean")
@@ -20,6 +22,9 @@ public class ProdutoManageBean {
 
 	@ManagedProperty(name = "produtoDAO", value = "#{produtoDAO}")
 	private ProdutoDAO produtoDAO;
+	
+	@ManagedProperty(name = "reportUtil", value = "#{reportUtil}")
+	private ReportUtil reportUtil;
 
 	public String salvar() {
 		produto = produtoDAO.merge(produto);
@@ -62,5 +67,20 @@ public class ProdutoManageBean {
 	public void setProdutoDAO(ProdutoDAO produtoDAO) {
 		this.produtoDAO = produtoDAO;
 	}
+	
+	public void setReportUtil(ReportUtil reportUtil) {
+		this.reportUtil = reportUtil;
+	}
+	
+	public ReportUtil getReportUtil() {
+		return reportUtil;
+	}
+	
+	
+	public StreamedContent getFileRelatorio() throws Exception{
+		reportUtil.setNomeRelatorioJasper("produto");
+		return reportUtil.getArquivoReportStreamedContentConnection();
+	}
+	
 
 }
