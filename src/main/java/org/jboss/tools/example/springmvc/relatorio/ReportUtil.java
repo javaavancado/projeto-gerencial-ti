@@ -62,7 +62,8 @@ public class ReportUtil implements Serializable {
 	private String nomeRelatorioJasper = "default";
 
 	private byte[] geraRelatorioByte(List<?> listDataBeanColletionReport, HashMap<String, Object> parametrosRelatorio,
-			String nomeRelatorioJasper, String nomeRelatorioSaida, int tipoRelatorio) throws Exception {
+			String nomeRelatorioJasper, String nomeRelatorioSaida, int tipoRelatorio, boolean usaConnection)
+			throws Exception {
 
 		String caminhoRelatorio = getContext().getRealPath(FOLDER_RELATORIOS);
 		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listDataBeanColletionReport);
@@ -84,19 +85,29 @@ public class ReportUtil implements Serializable {
 		String caminhoArquivoJasper = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + ".jasper";
 
 		byte[] byteRetorno = null;
+		JasperPrint jasperPrint = null;
 
 		if (tipoRelatorio == 1) {// Gera PDF
 
-			JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoArquivoJasper, parametrosRelatorio, jrbcds);
+			if (usaConnection) {
+				jasperPrint = JasperFillManager.fillReport(caminhoArquivoJasper, parametrosRelatorio, getConnection());
+			} else {
+				jasperPrint = JasperFillManager.fillReport(caminhoArquivoJasper, parametrosRelatorio, jrbcds);
+			}
+
 			byteRetorno = JasperExportManager.exportReportToPdf(jasperPrint);
 
 		} else if (tipoRelatorio == 2) {// Gera Excel
 
 			String caminhoArquivoXls = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + ".xls";
 
-			JasperPrint printFileName = JasperFillManager.fillReport(caminhoArquivoJasper, parametrosRelatorio, jrbcds);
+			if (usaConnection) {
+				jasperPrint = JasperFillManager.fillReport(caminhoArquivoJasper, parametrosRelatorio, getConnection());
+			} else {
+				jasperPrint = JasperFillManager.fillReport(caminhoArquivoJasper, parametrosRelatorio, jrbcds);
+			}
 			JRXlsExporter exporter = new JRXlsExporter();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, printFileName);
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivoXls);
 			exporter.exportReport();
 
@@ -108,13 +119,49 @@ public class ReportUtil implements Serializable {
 
 	}
 
+	/**
+	 * Retorna o relatorio em byte[] para ser suado em qualquer aplicação
+	 * 
+	 * @return byte[]
+	 * @throws Exception
+	 */
 	public byte[] getArquivoReportByte() throws Exception {
 		return geraRelatorioByte(getListDataBeanCollectionReport(), getParametrosRelatorio(), getNomeRelatorioJasper(),
-				getNomeRelatorioJasper(), getTipoRelatorio());
+				getNomeRelatorioJasper(), getTipoRelatorio(), false);
+	}
+	
+	/**
+	 * Retorna o relatorio em byte[] para ser suado em qualquer aplicação
+	 * 
+	 * @return byte[]
+	 * @throws Exception
+	 */
+	public byte[] getArquivoReportByteConnection() throws Exception {
+		return geraRelatorioByte(getListDataBeanCollectionReport(), getParametrosRelatorio(), getNomeRelatorioJasper(),
+				getNomeRelatorioJasper(), getTipoRelatorio(), true);
 	}
 
+	/**
+	 * Retorna o relatorio pronto para o download em PrimeFaces
+	 * 
+	 * @return StreamedContent
+	 * @throws Exception
+	 */
 	public StreamedContent getArquivoReportStreamedContent() throws Exception {
 		byte[] relatorio = getArquivoReportByte();
+		InputStream stream = new ByteArrayInputStream(relatorio);
+		return new DefaultStreamedContent(stream, "aplication/" + (tipoRelatorio == 1 ? "pdf" : "xls"),
+				getNomeRelatorioJasper() + "." + (tipoRelatorio == 1 ? "pdf" : "xls"));
+	}
+	
+	/**
+	 * Retorna o relatorio pronto para o download em PrimeFaces
+	 * 
+	 * @return StreamedContent
+	 * @throws Exception
+	 */
+	public StreamedContent getArquivoReportStreamedContentConnection() throws Exception {
+		byte[] relatorio = getArquivoReportByteConnection();
 		InputStream stream = new ByteArrayInputStream(relatorio);
 		return new DefaultStreamedContent(stream, "aplication/" + (tipoRelatorio == 1 ? "pdf" : "xls"),
 				getNomeRelatorioJasper() + "." + (tipoRelatorio == 1 ? "pdf" : "xls"));
