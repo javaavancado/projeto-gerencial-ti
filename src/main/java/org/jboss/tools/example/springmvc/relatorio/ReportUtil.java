@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +16,18 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.sql.DataSource;
+
+import org.springframework.orm.jpa.JpaTransactionManager;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -25,9 +36,22 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 
+@SuppressWarnings({ "unused", "deprecation", "rawtypes" })
+@Repository("reportUtil")
+@Transactional
+@EnableTransactionManagement
 public class ReportUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Autowired
+	protected DriverManagerDataSource dataSource;
+
+	@Autowired
+	protected LocalContainerEntityManagerFactoryBean myEmf;
+
+	@Autowired
+	protected JpaTransactionManager transactionManager;
 
 	private static final String FOLDER_RELATORIOS = "/relatorios";
 	private String SEPARATOR = File.separator;
@@ -67,11 +91,10 @@ public class ReportUtil implements Serializable {
 			byteRetorno = JasperExportManager.exportReportToPdf(jasperPrint);
 
 		} else if (tipoRelatorio == 2) {// Gera Excel
-			
+
 			String caminhoArquivoXls = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + ".xls";
 
-			JasperPrint printFileName = JasperFillManager.
-					    fillReport(caminhoArquivoJasper, parametrosRelatorio, jrbcds);
+			JasperPrint printFileName = JasperFillManager.fillReport(caminhoArquivoJasper, parametrosRelatorio, jrbcds);
 			JRXlsExporter exporter = new JRXlsExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, printFileName);
 			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivoXls);
@@ -89,7 +112,7 @@ public class ReportUtil implements Serializable {
 		return geraRelatorioByte(getListDataBeanCollectionReport(), getParametrosRelatorio(), getNomeRelatorioJasper(),
 				getNomeRelatorioJasper(), getTipoRelatorio());
 	}
-	
+
 	public StreamedContent getArquivoReportStreamedContent() throws Exception {
 		byte[] relatorio = getArquivoReportByte();
 		InputStream stream = new ByteArrayInputStream(relatorio);
@@ -147,7 +170,8 @@ public class ReportUtil implements Serializable {
 
 	/***
 	 * 
-	 * @param is InputStream
+	 * @param is
+	 *            InputStream
 	 * @return byte[] do relatório em excel
 	 * @throws IOException
 	 */
@@ -171,5 +195,23 @@ public class ReportUtil implements Serializable {
 		return buf;
 	}
 
+	private Connection getConnection() throws SQLException {
+		return dataSource.getConnection();
+	}
 
+	private Connection getConnectionMyEmf() throws SQLException {
+		return myEmf.getDataSource().getConnection();
+	}
+
+	private Connection getConnectionTM() throws SQLException {
+		return transactionManager.getDataSource().getConnection();
+	}
+
+	private DataSource getDataSourceEmf() throws SQLException {
+		return myEmf.getDataSource();
+	}
+
+	private DataSource getDataSourceTM() throws SQLException {
+		return transactionManager.getDataSource();
+	}
 }

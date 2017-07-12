@@ -15,7 +15,8 @@ public class EmpresaManageBean {
 
 	private Empresa empresa = new Empresa();
 	
-	private ReportUtil reportUtil = new ReportUtil();
+	@ManagedProperty(name = "reportUtil", value = "#{reportUtil}")
+	private ReportUtil reportUtil;
 
 	@ManagedProperty(name = "empresaDAO", value = "#{empresaDAO}")
 	private EmpresaDAO empresaDAO;
@@ -54,6 +55,14 @@ public class EmpresaManageBean {
 	
 	public EmpresaDAO getEmpresaDAO() {
 		return empresaDAO;
+	}
+	
+	public void setReportUtil(ReportUtil reportUtil) {
+		this.reportUtil = reportUtil;
+	}
+	
+	public ReportUtil getReportUtil() {
+		return reportUtil;
 	}
 
 }

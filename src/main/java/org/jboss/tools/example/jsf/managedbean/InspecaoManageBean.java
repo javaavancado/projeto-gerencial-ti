@@ -24,7 +24,8 @@ import org.primefaces.model.chart.ChartSeries;
 @ManagedBean(name = "inspecaoManageBean")
 public class InspecaoManageBean {
 	
-	private ReportUtil reportUtil = new ReportUtil();
+	@ManagedProperty(name = "reportUtil", value = "#{reportUtil}")
+	private ReportUtil reportUtil;
 	
 	private BarChartModel barModel = new BarChartModel();
 
@@ -144,6 +145,14 @@ public class InspecaoManageBean {
 	
 	public List<Inspecao> getInspecoes() {
 		return inspecoes;
+	}
+	
+	public void setReportUtil(ReportUtil reportUtil) {
+		this.reportUtil = reportUtil;
+	}
+	
+	public ReportUtil getReportUtil() {
+		return reportUtil;
 	}
 
 }
