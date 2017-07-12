@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
 import org.primefaces.model.DefaultStreamedContent;
@@ -29,24 +31,20 @@ public class ReportUtil implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String FOLDER_RELATORIOS = "/relatorios";
-	private static final String SUBREPORT_DIR = "SUBREPORT_DIR";
 	private String SEPARATOR = File.separator;
-	private static final String PONTO = ".";
 	private String caminhoSubreport_dir = "";
 	private int tipoRelatorio;
 	private List<?> listDataBeanCollectionReport = new ArrayList();
 	private HashMap<String, Object> parametrosRelatorio = new HashMap<String, Object>();
 	private String nomeRelatorioJasper = "default";
-	private String nomeRelatorioSaida = "default";
-	private ServletContext context;
 
-	public byte[] geraRelatorioByte(List<?> listDataBeanColletionReport, HashMap<String, Object> parametrosRelatorio,
+	private byte[] geraRelatorioByte(List<?> listDataBeanColletionReport, HashMap<String, Object> parametrosRelatorio,
 			String nomeRelatorioJasper, String nomeRelatorioSaida, int tipoRelatorio) throws Exception {
 
-		String caminhoRelatorio = context.getRealPath(FOLDER_RELATORIOS);
+		String caminhoRelatorio = getContext().getRealPath(FOLDER_RELATORIOS);
 		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listDataBeanColletionReport);
 
-		File file = new File(caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + PONTO + "jasper");
+		File file = new File(caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + ".jasper");
 
 		if (caminhoRelatorio == null || (caminhoRelatorio != null && caminhoRelatorio.isEmpty()) || !file.exists()) {
 			caminhoRelatorio = this.getClass().getResource(FOLDER_RELATORIOS).getPath();
@@ -57,10 +55,10 @@ public class ReportUtil implements Serializable {
 
 		/* caminho para imagens */
 		parametrosRelatorio.put("REPORT_PARAMETERS_IMG", caminhoRelatorio);
-		parametrosRelatorio.put(SUBREPORT_DIR, caminhoSubreport_dir);
+		parametrosRelatorio.put("SUBREPORT_DIR", caminhoSubreport_dir);
 
 		/* Caminho relatorio exportado */
-		String caminhoArquivoJasper = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + PONTO + "jasper";
+		String caminhoArquivoJasper = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + ".jasper";
 
 		byte[] byteRetorno = null;
 
@@ -71,11 +69,10 @@ public class ReportUtil implements Serializable {
 
 		} else if (tipoRelatorio == 2) {// Gera Excel
 			
-			String caminhoArquivoXls = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + PONTO + "xls";
+			String caminhoArquivoXls = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + ".xls";
 
 			JasperPrint printFileName = JasperFillManager.
-					    fillReport(caminhoArquivoJasper, parametrosRelatorio,
-					    jrbcds);
+					    fillReport(caminhoArquivoJasper, parametrosRelatorio, jrbcds);
 			JRXlsExporter exporter = new JRXlsExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, printFileName);
 			exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
@@ -95,34 +92,48 @@ public class ReportUtil implements Serializable {
 
 	public byte[] getArquivoReportByte() throws Exception {
 		return geraRelatorioByte(getListDataBeanCollectionReport(), getParametrosRelatorio(), getNomeRelatorioJasper(),
-				getNomeRelatorioSaida(), getTipoRelatorio());
+				getNomeRelatorioJasper(), getTipoRelatorio());
+	}
+	
+	public StreamedContent getArquivoReportStreamedContent() throws Exception {
+		byte[] relatorio = getArquivoReportByte();
+		InputStream stream = new ByteArrayInputStream(relatorio);
+		return new DefaultStreamedContent(stream, "aplication/" + (tipoRelatorio == 1 ? "pdf" : "xls"),
+				getNomeRelatorioJasper() + "." + (tipoRelatorio == 1 ? "pdf" : "xls"));
 	}
 
-	public int getTipoRelatorio() {
-		return tipoRelatorio;
+	private int getTipoRelatorio() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String tipoRelatorio = params.get("tipoRelatorio");
+		if (tipoRelatorio == null || (tipoRelatorio != null && tipoRelatorio.isEmpty())) {
+			tipoRelatorio = "1";
+		}
+		this.tipoRelatorio = Integer.parseInt(tipoRelatorio);
+
+		return this.tipoRelatorio;
 	}
 
-	public void setTipoRelatorio(int tipoRelatorio) {
-		this.tipoRelatorio = tipoRelatorio;
-	}
-
-	public List<?> getListDataBeanCollectionReport() {
+	private List<?> getListDataBeanCollectionReport() {
 		return listDataBeanCollectionReport;
 	}
 
 	public void setListDataBeanCollectionReport(List<?> listDataBeanCollectionReport) {
-		this.listDataBeanCollectionReport = listDataBeanCollectionReport;
+		if (listDataBeanCollectionReport != null) {
+			this.listDataBeanCollectionReport = listDataBeanCollectionReport;
+		}
 	}
 
-	public HashMap<String, Object> getParametrosRelatorio() {
+	private HashMap<String, Object> getParametrosRelatorio() {
 		return parametrosRelatorio;
 	}
 
 	public void setParametrosRelatorio(HashMap<String, Object> parametrosRelatorio) {
-		this.parametrosRelatorio = parametrosRelatorio;
+		if (parametrosRelatorio != null) {
+			this.parametrosRelatorio = parametrosRelatorio;
+		}
 	}
 
-	public String getNomeRelatorioJasper() {
+	private String getNomeRelatorioJasper() {
 		return nomeRelatorioJasper;
 	}
 
@@ -135,20 +146,8 @@ public class ReportUtil implements Serializable {
 		this.nomeRelatorioJasper = nomeRelatorioJasper;
 	}
 
-	public String getNomeRelatorioSaida() {
-		return nomeRelatorioSaida;
-	}
-
-	public void setNomeRelatorioSaida(String nomeRelatorioSaida) {
-
-		if (nomeRelatorioSaida == null || nomeRelatorioSaida.isEmpty()) {
-			nomeRelatorioSaida = "default";
-		}
-		this.nomeRelatorioSaida = nomeRelatorioSaida;
-	}
-
-	public void setContext(ServletContext context) {
-		this.context = context;
+	private ServletContext getContext() {
+		return (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 	}
 
 	/***
@@ -157,7 +156,7 @@ public class ReportUtil implements Serializable {
 	 * @return byte[] do relatório em excel
 	 * @throws IOException
 	 */
-	public byte[] getBytes(InputStream is) throws IOException {
+	private byte[] getBytes(InputStream is) throws IOException {
 
 		int len;
 		int size = 1024;
@@ -177,11 +176,5 @@ public class ReportUtil implements Serializable {
 		return buf;
 	}
 
-	public StreamedContent getArquivoReportStreamedContent() throws Exception {
-		byte[] relatorio = getArquivoReportByte();
-		InputStream stream = new ByteArrayInputStream(relatorio);
-		return new DefaultStreamedContent(stream, "aplication/" + (tipoRelatorio == 1 ? "pdf" : "xls"),
-				"analise." + (tipoRelatorio == 1 ? "pdf" : "xls"));
-	}
 
 }
