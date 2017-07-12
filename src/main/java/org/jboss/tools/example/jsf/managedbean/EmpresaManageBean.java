@@ -1,11 +1,8 @@
 package org.jboss.tools.example.jsf.managedbean;
 
-import java.util.Map;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 
 import org.jboss.tools.example.springmvc.data.EmpresaDAO;
 import org.jboss.tools.example.springmvc.model.rd.Empresa;

@@ -20,7 +20,6 @@ import javax.validation.Valid;
 
 import org.jboss.tools.example.springmvc.data.MemberDao;
 import org.jboss.tools.example.springmvc.model.Member;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.UnexpectedRollbackException;
