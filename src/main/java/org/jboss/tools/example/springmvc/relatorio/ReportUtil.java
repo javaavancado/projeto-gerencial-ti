@@ -18,12 +18,11 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
-import org.springframework.orm.jpa.JpaTransactionManager;
-
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
