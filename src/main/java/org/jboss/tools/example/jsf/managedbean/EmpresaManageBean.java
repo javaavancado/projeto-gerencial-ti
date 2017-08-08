@@ -1,8 +1,13 @@
 package org.jboss.tools.example.jsf.managedbean;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.jboss.tools.example.springmvc.data.EmpresaDAO;
 import org.jboss.tools.example.springmvc.model.rd.Empresa;
@@ -21,14 +26,6 @@ public class EmpresaManageBean {
 	@ManagedProperty(name = "empresaDAO", value = "#{empresaDAO}")
 	private EmpresaDAO empresaDAO;
 	
-	public StreamedContent getFileRelatorio() throws Exception{
-
-		reportUtil.setNomeRelatorioJasper("empresa");
-		reportUtil.setParametrosRelatorio(null);
-		reportUtil.setListDataBeanCollectionReport(null);
-		
-		return reportUtil.getArquivoReportStreamedContent();
-	}
 
 	public String salvar() {
 		empresa = empresaDAO.merge(empresa);
@@ -64,5 +61,25 @@ public class EmpresaManageBean {
 	public ReportUtil getReportUtil() {
 		return reportUtil;
 	}
+	
+	public StreamedContent getFileRelatorio() throws Exception{
+		reportUtil.setNomeRelatorioJasper("empresa");
+		reportUtil.setListDataBeanCollectionReport(empresaDAO.lista());
+		return reportUtil.getArquivoReportStreamedContent();
+	}
+	
+	public StreamedContent getFileRelatorioUnico() throws Exception{
+		
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		
+		String inspecaoId = params.get("empresaId");
+		List<Empresa> inspecaos = new ArrayList<Empresa>();
+		inspecaos.add(empresaDAO.buscaPorId(Long.parseLong(inspecaoId)));
+		
+		reportUtil.setNomeRelatorioJasper("empresa");
+		reportUtil.setListDataBeanCollectionReport(inspecaos);
+		return reportUtil.getArquivoReportStreamedContent();
+	}
+	
 
 }

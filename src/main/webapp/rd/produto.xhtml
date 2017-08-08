@@ -36,9 +36,25 @@
 		</p:panel>
 
 		<p:spacer height="50px" />
-
-		<p:commandButton value="Salvar" update="@form tabMenu:formInspecao" ajax="true"
+			
+		<h:panelGrid columns="3">
+			<p:commandButton value="Salvar" update="@form tabMenu:formInspecao" ajax="true"
 			actionListener="#{produtoManageBean.salvar()}" />
+			
+
+			<p:commandLink ajax="false" immediate="true"> 
+				<h:graphicImage library="gfx" name="pdf.ico" height="50" width="50" />
+				<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
+				<f:param name="tipoRelatorio" value="1"/>
+			</p:commandLink>
+			
+			<p:commandLink ajax="false" immediate="true"> 
+				<h:graphicImage library="gfx" name="xls.ico" height="50" width="50" />
+				<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
+				<f:param name="tipoRelatorio" value="2"/>
+			</p:commandLink>
+			
+		</h:panelGrid>	
 	</h:form>
 </h:body>
 </html>
