@@ -36,9 +36,10 @@ public class UnidadeProdutoManageBean {
 	private String descricaoPesquisa = "";
 
 	public String salvar() {
-		unidadeProduto = (UnidadeProduto) iGenericDao.merge(unidadeProduto);
+		iGenericDao.merge(unidadeProduto);
 		ManagedBeanViewUtil.sucesso();
 		novo();
+		pesquisar();
 		return "";
 	}
 
@@ -47,8 +48,8 @@ public class UnidadeProdutoManageBean {
 				.get("unidadeProdutoId");
 		produtoDAO.removeUnidade(Long.parseLong(unidadeProdutoId));
 		ManagedBeanViewUtil.sucesso();
-		pesquisar();
 		novo();
+		pesquisar();
 	}
 
 	public String novo() {

@@ -6,69 +6,155 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pm="http://primefaces.org/mobile">
 
-<f:view renderKitId="PRIMEFACES_MOBILE" />		
+<f:view renderKitId="PRIMEFACES_MOBILE" />
 
 <h:head></h:head>
 <h:body>
-<pm:page>
-<pm:content>
-    <ui:include src="/rd/menu.xhtml" />
-	<h:form id="formEmpresa">
-	<p:growl autoUpdate="true" id="msg" showDetail="true" life="2000" />
-		<p:panel header="Cadastro de Empresa">
-			<p:panelGrid columns="3">
-				<p:outputLabel value="Código: " />
-				<p:inputText id="id" readonly="true" value="#{empresaManageBean.empresa.id}"/>
-				<p:message for="id"/>
+	<pm:page id="paginaEmpresa">
+		<pm:content>
+			<ui:include src="/rd/menu.xhtml" />
+			<h:form id="formEmpresa">
+				<p:growl autoUpdate="true" id="msg" showDetail="false" life="2000" />
+				<p:panel header="Cadastro de Empresa">
+					<p:panelGrid columns="1">
 
-				<p:outputLabel value="Nome: " />
-				<p:inputText id="nome" value="#{empresaManageBean.empresa.nome}"  
-					required="true" requiredMessage="Informe o nome."/>
-				<p:message for="nome"/>
-				
-				<p:outputLabel value="Ramo de Atividade: " />
-				<p:inputText id="ramo" value="#{empresaManageBean.empresa.ramo_de_atividade}"  
-					required="true" requiredMessage="Informe o ramo de atividade."/>
-				<p:message for="ramo"/>
-				
-				<p:outputLabel value="Ativo: " />
-				<p:selectBooleanCheckbox id="ativo" value="#{empresaManageBean.empresa.status}" />
-				<p:message for="ativo"/>
-				
-				<p:outputLabel value="Tipo Fiscal: " />
-				<p:inputText id="tipoFiscal" value="#{empresaManageBean.empresa.tipoFiscal}" />
-				<p:message for="tipoFiscal"/>
-				
-				<p:outputLabel value="Responsável: " />
-				<p:inputText id="responsavel" value="#{empresaManageBean.empresa.responsavel}" 
-				required="true" requiredMessage="Informe o responsável"/>
-				<p:message for="responsavel"/>
-			    
-			</p:panelGrid>
-		</p:panel>
-		
-		<p:spacer height="50px"/>
-		
-		<p:panelGrid columns="3">
-			<p:commandButton value="Salvar" update="@all"
-				ajax="true" actionListener="#{empresaManageBean.salvar()}" />
+						<pm:field>
+							<p:outputLabel value="Código: " />
+							<p:inputText id="id" readonly="true"
+								value="#{empresaManageBean.empresa.id}" />
+							<p:message for="id" />
+						</pm:field>
 
-			<p:commandLink ajax="false" immediate="true"> 
-				<h:graphicImage library="gfx" name="pdf.ico" height="50" width="50" />
-				<p:fileDownload value="#{empresaManageBean.fileRelatorio}" />
-				<f:param name="tipoRelatorio" value="1"/>
-			</p:commandLink>
-			
-			<p:commandLink ajax="false" immediate="true"> 
-				<h:graphicImage library="gfx" name="xls.ico" height="50" width="50" />
-				<p:fileDownload value="#{empresaManageBean.fileRelatorio}" />
-				<f:param name="tipoRelatorio" value="2"/>
-			</p:commandLink>
-			
-		</p:panelGrid>
-		
-	</h:form>
-</pm:content>	
-</pm:page>	
+						<pm:field>
+							<p:outputLabel value="Nome: " />
+							<p:inputText id="nome" value="#{empresaManageBean.empresa.nome}"
+								required="true" requiredMessage="Informe o nome." />
+							<p:message for="nome" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Ramo de Atividade: " />
+							<p:inputText id="ramo"
+								value="#{empresaManageBean.empresa.ramo_de_atividade}"
+								required="true" requiredMessage="Informe o ramo de atividade." />
+							<p:message for="ramo" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Ativo: " />
+							<p:selectBooleanCheckbox id="ativo"
+								value="#{empresaManageBean.empresa.status}" />
+							<p:message for="ativo" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Tipo Fiscal: " />
+							<p:inputText id="tipoFiscal"
+								value="#{empresaManageBean.empresa.tipoFiscal}" />
+							<p:message for="tipoFiscal" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Responsável: " />
+							<p:inputText id="responsavel"
+								value="#{empresaManageBean.empresa.responsavel}" required="true"
+								requiredMessage="Informe o responsável" />
+							<p:message for="responsavel" />
+						</pm:field>
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:spacer height="50px" />
+
+				<p:panelGrid columns="2">
+
+					<pm:field>
+						<p:commandButton value="Novo" immediate="true" ajax="false"
+							action="#{empresaManageBean.novo()}" />
+					</pm:field>
+
+					<pm:field>
+						<p:commandButton value="Salvar" update="@form, paginaEmpresa:formPesquisar, msg" ajax="true"
+							actionListener="#{empresaManageBean.salvar()}" />
+					</pm:field>
+
+					<pm:field>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="pdf.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{empresaManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="1" />
+							</p:commandLink>
+						</center>
+					</pm:field>
+
+					<pm:field>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="xls.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{empresaManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="2" />
+							</p:commandLink>
+						</center>
+					</pm:field>
+
+				</p:panelGrid>
+			</h:form>
+
+			<p:spacer height="50px" />
+
+
+			<h:form id="formPesquisar">
+				<p:panel header="Pesquisar" id="panelPesquisar">
+					<p:panelGrid columns="1" id="panelGridPesquisar">
+
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="descricaoPesquisa"
+								value="#{empresaManageBean.descricaoPesquisa}" />
+						</pm:field>
+						<p:commandButton value="Pesquisar" id="botaoPesquisar"
+							update="listaEmpresa" ajax="true"
+							actionListener="#{empresaManageBean.pesquisar()}" />
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:dataTable id="listaEmpresa" var="empresa"
+					value="#{empresaManageBean.list}" rows="10" paginator="true"
+					paginatorPosition="bottom" lazy="true"
+					paginatorTemplate="{FirstPageLink}
+								   {PreviousPageLink} {PageLinks} 
+	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
+					<p:column headerText="Descrição" width="100">
+						<h:outputText value="#{empresa.nome}" />
+					</p:column>
+
+					<p:column headerText="Editar" width="50">
+						<h:commandLink immediate="true">
+							<f:setPropertyActionListener
+								target="#{empresaManageBean.empresa}" value="#{empresa}" />
+							<f:ajax render=":paginaEmpresa:formEmpresa" />
+							<h:graphicImage value="/resources/gfx/editar.png" width="30"
+								height="30" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column headerText="Excluir" width="50">
+						<p:commandLink immediate="true" ajax="true"
+							update="@form:listaEmpresa"
+							action="#{empresaManageBean.excluir()}">
+							<f:param name="empresaId" value="#{empresa.id}" />
+							<h:graphicImage value="/resources/gfx/delete.png" width="30"
+								height="30" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</pm:content>
+	</pm:page>
 </h:body>
 </html>

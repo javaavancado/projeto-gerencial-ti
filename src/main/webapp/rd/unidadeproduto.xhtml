@@ -14,7 +14,7 @@
 		<pm:content id="pagina">
 			<ui:include src="/rd/menu.xhtml" />
 			<h:form id="formProduto">
-				<p:growl autoUpdate="true" id="msg" showDetail="true" life="2000" />
+				<p:growl autoUpdate="true" id="msg" showDetail="false" life="2000" />
 				<p:panel header="Unidade de produto" id="panelUnidade">
 					<p:panelGrid columns="1">
 						<pm:field>
@@ -48,7 +48,7 @@
 
 					</pm:field>
 					<pm:field>
-						<p:commandButton value="Salvar" update="@form, msg" ajax="true"
+						<p:commandButton value="Salvar" update="@form, paginaUnidade:formPesquisar , msg" ajax="true"
 							actionListener="#{unidadeProdutoManageBean.salvar()}" />
 
 					</pm:field>
@@ -106,19 +106,21 @@
 					</p:column>
 
 					<p:column headerText="Editar" width="50">
-						<h:commandLink value="Editar" immediate="true">
+						<h:commandLink  immediate="true">
 							<f:setPropertyActionListener
 								target="#{unidadeProdutoManageBean.unidadeProduto}"
 								value="#{unidade}" />
 							<f:ajax render=":paginaUnidade:formProduto" />
+							<h:graphicImage value="/resources/gfx/editar.png" width="30" height="30"/>
 						</h:commandLink>
 					</p:column>
 
 					<p:column headerText="Excluir" width="50">
-						<p:commandLink value="Excluir" immediate="true" ajax="true"
+						<p:commandLink immediate="true" ajax="true"
 							update="@form:listaUnidadeProduto"
 							action="#{unidadeProdutoManageBean.excluir()}">
 							<f:param name="unidadeProdutoId" value="#{unidade.id}" />
+							<h:graphicImage value="/resources/gfx/delete.png" width="30" height="30"/>
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>

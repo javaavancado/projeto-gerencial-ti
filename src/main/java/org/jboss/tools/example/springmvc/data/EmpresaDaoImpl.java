@@ -31,6 +31,15 @@ public class EmpresaDaoImpl extends GenericDAO<Empresa> implements EmpresaDAO {
 	public List<Empresa> lista() {
 		return super.em.createQuery(" from Empresa ").getResultList();
 	}
+	
+	
+	@Override
+	public String queryEmpresaNome(String nome) {
+		if (nome != null && !nome.trim().isEmpty()) {
+			return " from Empresa where nome like'%" + nome + "%'";
+		}
+		return " from Empresa ";
+	}
 
 	@Override
 	public List<SelectItem> listaComboBox() {
@@ -45,6 +54,10 @@ public class EmpresaDaoImpl extends GenericDAO<Empresa> implements EmpresaDAO {
 		return retorno;
 	}
 
-	
+	@Override
+	public void removeEmpresa(Long id) {
+		super.em.createQuery("delete from Empresa where id = " + id).executeUpdate();
+	}
+
 
 }

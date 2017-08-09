@@ -17,4 +17,8 @@ public interface EmpresaDAO extends Serializable{
 	
 	List<SelectItem> listaComboBox();
 
+	public String queryEmpresaNome(String nome);
+	
+	public void removeEmpresa(Long id);
+
 }
