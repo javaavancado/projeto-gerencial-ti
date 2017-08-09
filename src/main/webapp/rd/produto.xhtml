@@ -3,58 +3,109 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
 
 <h:head></h:head>
 <h:body>
-	<h:form id="formProduto">
-		<p:panel header="Cadastro de produto">
-			<h:panelGrid columns="3">
-				<p:outputLabel value="Código: " />
-				<p:inputText id="id" readonly="true"
-					value="#{produtoManageBean.produto.id}" />
-				<p:message for="id" />
+	<pm:page>
+		<pm:content>
+			<ui:include src="/rd/menu.xhtml" />
+			<h:form id="formProduto">
+				<p:messages autoUpdate="true" id="msg" showDetail="false" />
+				<p:panel header="Cadastro de produto">
+					<p:panelGrid columns="1">
 
-				<p:outputLabel value="Tipo do Produto: " />
-				<p:selectOneMenu id="tipoProduto"
-					value="#{produtoManageBean.produto.tipoProduto}" required="true"
-					requiredMessage="Informe o tipo do produto.">
-					<f:selectItems var="p"
-						value="#{produtoManageBean.listaTipoProduto()}" itemValue="#{p}"
-						itemLabel="#{p.description}" />
-				</p:selectOneMenu>
-				<p:message for="tipoProduto" />
+						<pm:field>
+							<p:outputLabel value="Adicionar Unidade: " />
+							<p:link outcome="/rd/unidadeproduto.jsf">
+								<h:graphicImage value="/resources/gfx/add16px.ico" height="50"
+									style="vertical-align: middle" />
+							</p:link>
+						</pm:field>
 
+						<pm:field>
+							<p:outputLabel value="Código: " />
+							<p:inputText id="id" readonly="true"
+								value="#{produtoManageBean.produto.id}" />
+							<p:message for="id" />
+						</pm:field>
 
-				<p:outputLabel value="Descrição: " />
-				<p:inputText id="descricao"
-					value="#{produtoManageBean.produto.descricao}" required="true"
-					requiredMessage="Informe a decrição produto." />
-				<p:message for="descricao" />
+						<pm:field>
+							<p:outputLabel value="Nome: " />
+							<p:inputText id="nome_produto"
+								value="#{produtoManageBean.produto.nome_produto}"
+								required="true" requiredMessage="Informe o nome do produto." />
+							<p:message for="nome_produto" />
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Unidade: " />
+							<p:selectOneMenu id="unidade"
+								value="#{produtoManageBean.produto.unidadeProduto}"
+								required="true" requiredMessage="Informe unidade do produto."
+								converter="unidadeProdutoConverter">
+								<f:selectItems var="p"
+									value="#{produtoManageBean.listaUnidadeProduto()}"
+									itemValue="#{p}" itemLabel="#{p.description}" />
+							</p:selectOneMenu>
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Tipo do Produto: " />
+							<p:selectOneMenu id="tipoProduto"
+								value="#{produtoManageBean.produto.tipoProduto}" required="true"
+								requiredMessage="Informe o tipo do produto.">
+								<f:selectItems var="p"
+									value="#{produtoManageBean.listaTipoProduto()}"
+									itemValue="#{p}" itemLabel="#{p.description}" />
+							</p:selectOneMenu>
+							<p:message for="tipoProduto" />
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="descricao"
+								value="#{produtoManageBean.produto.descricao}" required="true"
+								requiredMessage="Informe a decrição produto." />
+							<p:message for="descricao" />
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Critério: " />
+							<p:inputNumber id="criterio_inspecao"
+								value="#{produtoManageBean.produto.criterio_inspecao}"
+								required="true" requiredMessage="Informe o nome do produto.">
+								<f:convertNumber type="number" pattern="#0" />
+							</p:inputNumber>
+							<p:message for="criterio_inspecao" />
+						</pm:field>
+					</p:panelGrid>
+				</p:panel>
 
-			</h:panelGrid>
-		</p:panel>
+				<p:spacer height="50px" />
 
-		<p:spacer height="50px" />
-			
-		<h:panelGrid columns="3">
-			<p:commandButton value="Salvar" update="@form tabMenu:formInspecao" ajax="true"
-			actionListener="#{produtoManageBean.salvar()}" />
-			
-
-			<p:commandLink ajax="false" immediate="true"> 
-				<h:graphicImage library="gfx" name="pdf.ico" height="50" width="50" />
-				<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
-				<f:param name="tipoRelatorio" value="1"/>
-			</p:commandLink>
-			
-			<p:commandLink ajax="false" immediate="true"> 
-				<h:graphicImage library="gfx" name="xls.ico" height="50" width="50" />
-				<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
-				<f:param name="tipoRelatorio" value="2"/>
-			</p:commandLink>
-			
-		</h:panelGrid>	
-	</h:form>
+				<p:panelGrid columns="3">
+					<pm:field>
+						<p:commandButton value="Salvar" update="@form, msg" ajax="true"
+							actionListener="#{produtoManageBean.salvar()}" />
+					</pm:field>
+					<pm:field>
+						<p:commandLink ajax="false" immediate="true">
+							<h:graphicImage library="gfx" name="pdf.ico" height="50"
+								width="50" />
+							<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
+							<f:param name="tipoRelatorio" value="1" />
+						</p:commandLink>
+						<p:spacer width="15px" />
+						<p:commandLink ajax="false" immediate="true">
+							<h:graphicImage library="gfx" name="xls.ico" height="50"
+								width="50" />
+							<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
+							<f:param name="tipoRelatorio" value="2" />
+						</p:commandLink>
+					</pm:field>
+				</p:panelGrid>
+			</h:form>
+		</pm:content>
+	</pm:page>
 </h:body>
 </html>

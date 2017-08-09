@@ -9,21 +9,15 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
 import org.jboss.tools.example.springmvc.data.IGenericDao;
-import org.jboss.tools.example.springmvc.data.ProdutoDAO;
-import org.jboss.tools.example.springmvc.enums.TipoProduto;
-import org.jboss.tools.example.springmvc.model.rd.Produto;
 import org.jboss.tools.example.springmvc.model.rd.UnidadeProduto;
 import org.jboss.tools.example.springmvc.relatorio.ReportUtil;
 import org.primefaces.model.StreamedContent;
 
 @RequestScoped
-@ManagedBean(name = "produtoManageBean")
-public class ProdutoManageBean {
+@ManagedBean(name = "unidadeProdutoManageBean")
+public class UnidadeProdutoManageBean {
 
-	private Produto produto = new Produto();
-
-	@ManagedProperty(name = "produtoDAO", value = "#{produtoDAO}")
-	private ProdutoDAO produtoDAO;
+	private UnidadeProduto unidadeProduto = new UnidadeProduto();
 
 	@ManagedProperty(name = "iGenericDao", value = "#{iGenericDao}")
 	private IGenericDao iGenericDao;
@@ -32,22 +26,14 @@ public class ProdutoManageBean {
 	private ReportUtil reportUtil;
 
 	public String salvar() {
-		produto = produtoDAO.merge(produto);
+		unidadeProduto = (UnidadeProduto) iGenericDao.merge(unidadeProduto);
 		ManagedBeanViewUtil.sucesso();
 		novo();
 		return "";
 	}
 
 	public void novo() {
-		produto = new Produto();
-	}
-
-	public List<SelectItem> listaTipoProduto() {
-		List<SelectItem> retorno = new ArrayList<SelectItem>();
-		for (TipoProduto produto : TipoProduto.values()) {
-			retorno.add(new SelectItem(produto, produto.getDescricao()));
-		}
-		return retorno;
+		unidadeProduto = new UnidadeProduto();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,30 +46,6 @@ public class ProdutoManageBean {
 			retorno.add(new SelectItem(unidade, unidade.getDescricao()));
 		}
 		return retorno;
-	}
-
-	public List<SelectItem> listaProduto() {
-		List<SelectItem> retorno = new ArrayList<SelectItem>();
-		for (Produto produto : produtoDAO.listaProduto()) {
-			retorno.add(new SelectItem(produto, produto.getDescricao()));
-		}
-		return retorno;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}
-
-	public ProdutoDAO getProdutoDAO() {
-		return produtoDAO;
-	}
-
-	public void setProdutoDAO(ProdutoDAO produtoDAO) {
-		this.produtoDAO = produtoDAO;
 	}
 
 	public void setReportUtil(ReportUtil reportUtil) {
@@ -102,8 +64,16 @@ public class ProdutoManageBean {
 		return iGenericDao;
 	}
 
+	public UnidadeProduto getUnidadeProduto() {
+		return unidadeProduto;
+	}
+
+	public void setUnidadeProduto(UnidadeProduto unidadeProduto) {
+		this.unidadeProduto = unidadeProduto;
+	}
+
 	public StreamedContent getFileRelatorio() throws Exception {
-		reportUtil.setNomeRelatorioJasper("produto");
+		reportUtil.setNomeRelatorioJasper("unidadeProduto");
 		return reportUtil.getArquivoReportStreamedContentConnection();
 	}
 

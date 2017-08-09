@@ -3,13 +3,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />		
 
 <h:head></h:head>
 <h:body>
+<pm:page>
+<pm:content>
+    <ui:include src="/rd/menu.xhtml" />
 	<h:form id="formEmpresa">
 		<p:panel header="Cadastro de Empresa">
-			<h:panelGrid columns="3">
+			<p:panelGrid columns="3">
 				<p:outputLabel value="Código: " />
 				<p:inputText id="id" readonly="true" value="#{empresaManageBean.empresa.id}"/>
 				<p:message for="id"/>
@@ -37,13 +43,13 @@
 				required="true" requiredMessage="Informe o responsável"/>
 				<p:message for="responsavel"/>
 			    
-			</h:panelGrid>
+			</p:panelGrid>
 		</p:panel>
 		
 		<p:spacer height="50px"/>
 		
-		<h:panelGrid columns="3">
-			<p:commandButton value="Salvar" update="@form tabMenu:formGrafico"
+		<p:panelGrid columns="3">
+			<p:commandButton value="Salvar" update="@all"
 				ajax="true" actionListener="#{empresaManageBean.salvar()}" />
 
 			<p:commandLink ajax="false" immediate="true"> 
@@ -58,8 +64,10 @@
 				<f:param name="tipoRelatorio" value="2"/>
 			</p:commandLink>
 			
-		</h:panelGrid>
+		</p:panelGrid>
 		
 	</h:form>
+</pm:content>	
+</pm:page>	
 </h:body>
 </html>

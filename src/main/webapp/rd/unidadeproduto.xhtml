@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:head></h:head>
+<h:body>
+	<pm:page>
+		<pm:content>
+			<ui:include src="/rd/menu.xhtml" />
+			<h:form id="formProduto">
+				<p:messages autoUpdate="true" id="msg" showDetail="false" />
+				<p:panel header="Unidade de produto">
+					<p:panelGrid columns="1">
+						<pm:field>
+							<p:outputLabel value="Código: " />
+							<p:inputText id="id" readonly="true"
+								value="#{unidadeProdutoManageBean.unidadeProduto.id}" />
+							<p:message for="id" />
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="descricao" required="true"
+								requiredMessage="Informe a descrição."
+								value="#{unidadeProdutoManageBean.unidadeProduto.descricao}" />
+							<p:message for="descricao" />
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Sigla: " />
+							<p:inputText id="sigla"
+								value="#{unidadeProdutoManageBean.unidadeProduto.sigla}" />
+							<p:message for="sigla" />
+						</pm:field>
+					</p:panelGrid>
+				</p:panel>
+
+				<p:spacer height="50px" />
+
+				<p:panelGrid columns="2">
+					<pm:field>
+						<p:commandButton value="Salvar" update="@form, msg" ajax="true"
+							actionListener="#{unidadeProdutoManageBean.salvar()}" />
+
+					</pm:field>
+					<pm:field>
+						<p:commandLink ajax="false" immediate="true">
+							<h:graphicImage library="gfx" name="pdf.ico" height="50"
+								width="50" />
+							<p:fileDownload value="#{unidadeProdutoManageBean.fileRelatorio}" />
+							<f:param name="tipoRelatorio" value="1" />
+						</p:commandLink>
+						<p:spacer width="15px" />
+						<p:commandLink ajax="false" immediate="true">
+							<h:graphicImage library="gfx" name="xls.ico" height="50"
+								width="50" />
+							<p:fileDownload value="#{unidadeProdutoManageBean.fileRelatorio}" />
+							<f:param name="tipoRelatorio" value="2" />
+						</p:commandLink>
+					</pm:field>
+				</p:panelGrid>
+			</h:form>
+		</pm:content>
+	</pm:page>
+</h:body>
+</html>

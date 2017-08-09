@@ -43,6 +43,7 @@ public class InspecaoManageBean {
 
 	public String salvar() {
 		inspecao = inspecaoDAO.merge(inspecao);
+		ManagedBeanViewUtil.sucesso();
 		novo();
 		return "";
 	}

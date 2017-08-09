@@ -3,13 +3,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+	
+<f:view renderKitId="PRIMEFACES_MOBILE" />			
 
 <h:head></h:head>
 <h:body>
+<pm:page>
+<pm:content>
+<ui:include src="/rd/menu.xhtml" />
 	<h:form id="formGrafico">
 		<p:panel header="Gráfico de inspeção">
-			<h:panelGrid columns="3">
+			<p:panelGrid columns="3">
 				<p:outputLabel value="Produto: " />
 				<p:selectOneMenu id="produto" value="#{inspecaoManageBean.produtoSelecionadoGrafico}"
 					required="true" requiredMessage="Informe o produto.">
@@ -23,7 +29,7 @@
 				</p:selectOneMenu>
 				<p:message for="produto"/>
 				
-			</h:panelGrid>
+			</p:panelGrid>
 			
 			<p:chart type="bar" model="#{inspecaoManageBean.barModel}" id="graficoProdutoSelecionado"
 			style="height:300px"/>
@@ -33,5 +39,7 @@
 			<h:outputLabel id="produtoSelecionado"
 			value="#{inspecaoManageBean.produtoSelecionadoGrafico.descricao}" />
 	</h:form>
+</pm:content>	
+</pm:page>	
 </h:body>
 </html>

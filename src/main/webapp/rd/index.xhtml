@@ -3,25 +3,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
-<h:head></h:head>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+	
+<f:view renderKitId="PRIMEFACES_MOBILE" />			
+	
+<h:head>
+</h:head>
 <h:body>
-		<p:tabView id="tabMenu">
-			<p:tab title="Inspeção">
-				<ui:include src="/rd/inspecao.xhtml" />
-			</p:tab>
-			
-			<p:tab title="Empresa">
-				<ui:include src="/rd/empresa.xhtml" />
-			</p:tab>
-			
-			<p:tab title="Produto">
-				<ui:include src="/rd/produto.xhtml" />
-			</p:tab>
-			
-			<p:tab title="Gráfico">
-				<ui:include src="/rd/grafico.xhtml" />
-			</p:tab>
-		</p:tabView>
+<pm:page>
+<pm:content>
+ <h:form>
+	<ui:include src="/rd/menu.xhtml" />
+</h:form>	
+</pm:content>	
+</pm:page>		
 </h:body>
 </html>

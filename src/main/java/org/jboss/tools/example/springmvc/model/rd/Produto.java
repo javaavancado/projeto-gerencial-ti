@@ -8,9 +8,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.ForeignKey;
 import org.jboss.tools.example.springmvc.enums.TipoProduto;
 
 @Entity
@@ -23,10 +26,27 @@ public class Produto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "produto_sequence")
 	private Long id;
 
+	private String nome_produto;
+
+	private Long criterio_inspecao = 0L;
+
 	private String descricao;
 
 	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
+
+	@ManyToOne
+	@ForeignKey(name="unidade_id")
+	@JoinColumn(referencedColumnName = "id", name = "unidade_id", nullable = false)
+	private UnidadeProduto unidadeProduto = new UnidadeProduto();
+
+	public void setUnidadeProduto(UnidadeProduto unidadeProduto) {
+		this.unidadeProduto = unidadeProduto;
+	}
+
+	public UnidadeProduto getUnidadeProduto() {
+		return unidadeProduto;
+	}
 
 	public Long getId() {
 		return id;
@@ -50,6 +70,22 @@ public class Produto implements Serializable {
 
 	public TipoProduto getTipoProduto() {
 		return tipoProduto;
+	}
+
+	public String getNome_produto() {
+		return nome_produto;
+	}
+
+	public void setNome_produto(String nome_produto) {
+		this.nome_produto = nome_produto;
+	}
+
+	public Long getCriterio_inspecao() {
+		return criterio_inspecao;
+	}
+
+	public void setCriterio_inspecao(Long criterio_inspecao) {
+		this.criterio_inspecao = criterio_inspecao;
 	}
 
 	@Override

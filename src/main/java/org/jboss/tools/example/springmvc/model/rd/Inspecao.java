@@ -38,6 +38,10 @@ public class Inspecao implements Serializable {
 
 	private String local;
 
+	private String descricao;
+
+	private String responsavel_email;
+
 	private Integer reprovado = 0;
 
 	private Integer aprovado = 0;
@@ -45,6 +49,22 @@ public class Inspecao implements Serializable {
 	private Integer liberadoCondicional = 0;
 
 	private Integer naoInspecionado = 0;
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getResponsavel_email() {
+		return responsavel_email;
+	}
+
+	public void setResponsavel_email(String responsavel_email) {
+		this.responsavel_email = responsavel_email;
+	}
 
 	public Long getId() {
 		return id;
