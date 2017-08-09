@@ -10,10 +10,14 @@ public interface ProdutoDAO extends Serializable{
 	public Produto merge (Produto produto);
 	
 	public void removeUnidade(Long id);
+	
+	public void removeProduto(Long id);
 
 	public Produto buscaPorId(Long codigoProduto);
 	
 	public List<Produto> listaProduto();
 	
 	public String queryUnidadeDescricao(String decricao);
+
+	public String queryProdutoDescricao(String descricaoPesquisa);
 }

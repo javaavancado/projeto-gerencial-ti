@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.jboss.tools.example.projeto.listener.CarregamentoLazyListForObject;
 import org.jboss.tools.example.springmvc.data.IGenericDao;
 import org.jboss.tools.example.springmvc.data.ProdutoDAO;
 import org.jboss.tools.example.springmvc.enums.TipoProduto;
@@ -16,7 +18,7 @@ import org.jboss.tools.example.springmvc.model.rd.UnidadeProduto;
 import org.jboss.tools.example.springmvc.relatorio.ReportUtil;
 import org.primefaces.model.StreamedContent;
 
-@RequestScoped
+@ViewScoped
 @ManagedBean(name = "produtoManageBean")
 public class ProdutoManageBean {
 
@@ -31,15 +33,31 @@ public class ProdutoManageBean {
 	@ManagedProperty(name = "reportUtil", value = "#{reportUtil}")
 	private ReportUtil reportUtil;
 
+	private CarregamentoLazyListForObject<Produto> list = new CarregamentoLazyListForObject<Produto>();
+
+	private String descricaoPesquisa = "";
+
 	public String salvar() {
 		produto = produtoDAO.merge(produto);
 		ManagedBeanViewUtil.sucesso();
 		novo();
+		pesquisar();
 		return "";
 	}
 
-	public void novo() {
+	public String novo() {
 		produto = new Produto();
+		list.clean();
+		return "/rd/produto.jsf";
+	}
+
+	public void excluir() {
+		String produtoId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				.get("produtoId");
+		produtoDAO.removeProduto(Long.parseLong(produtoId));
+		ManagedBeanViewUtil.sucesso();
+		novo();
+		pesquisar();
 	}
 
 	public List<SelectItem> listaTipoProduto() {
@@ -105,6 +123,23 @@ public class ProdutoManageBean {
 	public StreamedContent getFileRelatorio() throws Exception {
 		reportUtil.setNomeRelatorioJasper("produto");
 		return reportUtil.getArquivoReportStreamedContentConnection();
+	}
+
+	public void pesquisar() {
+		list.clean();
+		list.setQuery(produtoDAO.queryProdutoDescricao(descricaoPesquisa));
+	}
+
+	public String getDescricaoPesquisa() {
+		return descricaoPesquisa;
+	}
+
+	public void setDescricaoPesquisa(String descricaoPesquisa) {
+		this.descricaoPesquisa = descricaoPesquisa;
+	}
+
+	public CarregamentoLazyListForObject<Produto> getList() {
+		return list;
 	}
 
 }

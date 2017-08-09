@@ -36,7 +36,7 @@ public class Produto implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@ForeignKey(name="unidade_id")
 	@JoinColumn(referencedColumnName = "id", name = "unidade_id", nullable = false)
 	private UnidadeProduto unidadeProduto = new UnidadeProduto();

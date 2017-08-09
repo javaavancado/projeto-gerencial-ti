@@ -36,7 +36,7 @@ public class EmpresaDaoImpl extends GenericDAO<Empresa> implements EmpresaDAO {
 	@Override
 	public String queryEmpresaNome(String nome) {
 		if (nome != null && !nome.trim().isEmpty()) {
-			return " from Empresa where nome like'%" + nome + "%'";
+			return " from Empresa where upper(nome) like'%" + nome.toUpperCase() + "%'";
 		}
 		return " from Empresa ";
 	}

@@ -49,7 +49,7 @@ public class ProdutoDaoImpl extends GenericDAO<Produto> implements ProdutoDAO {
 	@Override
 	public String queryUnidadeDescricao(String descricao) {
 		if (descricao != null && !descricao.trim().isEmpty()) {
-			return " from UnidadeProduto where descricao like'%" + descricao + "%'";
+			return " from UnidadeProduto where upper(descricao) like'%" + descricao.toUpperCase() + "%'";
 		}
 		return " from UnidadeProduto ";
 	}
@@ -57,6 +57,20 @@ public class ProdutoDaoImpl extends GenericDAO<Produto> implements ProdutoDAO {
 	@Override
 	public void removeUnidade(Long id) {
 		super.em.createQuery("delete from  UnidadeProduto where id = " + id).executeUpdate();
+	}
+
+	@Override
+	public void removeProduto(Long id) {
+		super.em.createQuery("delete from  Produto where id = " + id).executeUpdate();
+
+	}
+
+	@Override
+	public String queryProdutoDescricao(String descriao) {
+		if (descriao != null && !descriao.trim().isEmpty()) {
+			return " from Produto where upper(nome_produto) like'%" + descriao.toUpperCase() + "%'";
+		}
+		return " from Produto ";
 	}
 
 }

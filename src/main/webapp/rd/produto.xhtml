@@ -10,14 +10,13 @@
 
 <h:head></h:head>
 <h:body>
-	<pm:page>
-		<pm:content>
+	<pm:page id="paginaUnidade">
+		<pm:content id="pagina">
 			<ui:include src="/rd/menu.xhtml" />
 			<h:form id="formProduto">
 				<p:growl autoUpdate="true" id="msg" showDetail="false" life="2000" />
 				<p:panel header="Cadastro de produto">
 					<p:panelGrid columns="1">
-
 						<pm:field>
 							<p:outputLabel value="Adicionar Unidade: " />
 							<p:link outcome="/rd/unidadeproduto.jsf">
@@ -83,27 +82,88 @@
 
 				<p:spacer height="50px" />
 
-				<p:panelGrid columns="3">
+				<p:panelGrid columns="2">
 					<pm:field>
-						<p:commandButton value="Salvar" update="@form, msg" ajax="true"
+						<p:commandButton value="Novo" immediate="true" ajax="false"
+							action="#{produtoManageBean.novo()}" />
+
+					</pm:field>
+					<pm:field>
+						<p:commandButton value="Salvar"
+							update="@form, paginaUnidade:formPesquisar, msg" ajax="true"
 							actionListener="#{produtoManageBean.salvar()}" />
 					</pm:field>
 					<pm:field>
-						<p:commandLink ajax="false" immediate="true">
-							<h:graphicImage library="gfx" name="pdf.ico" height="50"
-								width="50" />
-							<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
-							<f:param name="tipoRelatorio" value="1" />
-						</p:commandLink>
-						<p:spacer width="15px" />
-						<p:commandLink ajax="false" immediate="true">
-							<h:graphicImage library="gfx" name="xls.ico" height="50"
-								width="50" />
-							<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
-							<f:param name="tipoRelatorio" value="2" />
-						</p:commandLink>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="pdf.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="1" />
+							</p:commandLink>
+						</center>
+					</pm:field>
+					<pm:field>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="xls.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{produtoManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="2" />
+							</p:commandLink>
+						</center>
 					</pm:field>
 				</p:panelGrid>
+			</h:form>
+
+			<p:spacer height="50px" />
+
+			<h:form id="formPesquisar">
+				<p:panel header="Pesquisar" id="panelPesquisar">
+					<p:panelGrid columns="1" id="panelGridPesquisar">
+
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="descricaoPesquisa"
+								value="#{produtoManageBean.descricaoPesquisa}" />
+						</pm:field>
+						<p:commandButton value="Pesquisar" id="botaoPesquisar"
+							update="listaUnidadeProduto" ajax="true"
+							actionListener="#{produtoManageBean.pesquisar()}" />
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:dataTable id="listaUnidadeProduto" var="unidade"
+					value="#{produtoManageBean.list}" rows="10" paginator="true"
+					paginatorPosition="bottom" lazy="true"
+					paginatorTemplate="{FirstPageLink}
+								   {PreviousPageLink} {PageLinks} 
+	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
+					<p:column headerText="Descrição" width="100">
+						<h:outputText value="#{unidade.nome_produto}" />
+					</p:column>
+
+					<p:column headerText="Editar" width="50">
+						<h:commandLink immediate="true">
+							<f:setPropertyActionListener
+								target="#{produtoManageBean.produto}" value="#{unidade}" />
+							<f:ajax render=":paginaUnidade:formProduto" />
+							<h:graphicImage value="/resources/gfx/editar.png" width="30"
+								height="30" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column headerText="Excluir" width="50">
+						<p:commandLink immediate="true" ajax="true"
+							update="@form:listaUnidadeProduto"
+							action="#{produtoManageBean.excluir()}">
+							<f:param name="produtoId" value="#{unidade.id}" />
+							<h:graphicImage value="/resources/gfx/delete.png" width="30"
+								height="30" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
 			</h:form>
 		</pm:content>
 	</pm:page>
