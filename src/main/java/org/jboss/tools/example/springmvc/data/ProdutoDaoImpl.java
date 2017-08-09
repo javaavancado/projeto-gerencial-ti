@@ -40,9 +40,23 @@ public class ProdutoDaoImpl extends GenericDAO<Produto> implements ProdutoDAO {
 		return super.em.find(Produto.class, codigoProduto);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Produto> listaProduto() {
 		return super.em.createQuery("from Produto").getResultList();
+	}
+
+	@Override
+	public String queryUnidadeDescricao(String descricao) {
+		if (descricao != null && !descricao.trim().isEmpty()) {
+			return " from UnidadeProduto where descricao like'%" + descricao + "%'";
+		}
+		return " from UnidadeProduto ";
+	}
+
+	@Override
+	public void removeUnidade(Long id) {
+		super.em.createQuery("delete from  UnidadeProduto where id = " + id).executeUpdate();
 	}
 
 }

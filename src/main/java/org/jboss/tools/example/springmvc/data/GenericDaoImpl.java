@@ -36,4 +36,18 @@ public class GenericDaoImpl extends GenericDAO<Object> implements IGenericDao {
 		return em.createQuery(criteria).getResultList();
 	}
 
+	@Override
+	public int total(String query) {
+		return Integer.valueOf(super.em.createQuery("select count(*) " 
+				+ query).getSingleResult().toString());
+	}
+
+	@Override
+	public List<?> finLazy(String query, int first, int pageSize) {
+		return (List<?>) super.em.createQuery(query)
+				.setFirstResult(first)
+				.setMaxResults(pageSize).getResultList();
+
+	}
+
 }

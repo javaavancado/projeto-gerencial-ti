@@ -12,4 +12,8 @@ public interface IGenericDao {
 
 	public List<?> list(Class<?> classs);
 
+	int total(String query);
+
+	List<?> finLazy(String query, int first, int pageSize);
+
 }

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ public class Produto implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@ForeignKey(name="unidade_id")
 	@JoinColumn(referencedColumnName = "id", name = "unidade_id", nullable = false)
 	private UnidadeProduto unidadeProduto = new UnidadeProduto();

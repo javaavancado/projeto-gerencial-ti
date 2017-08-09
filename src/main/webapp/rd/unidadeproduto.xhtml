@@ -10,12 +10,12 @@
 
 <h:head></h:head>
 <h:body>
-	<pm:page>
-		<pm:content>
+	<pm:page id="paginaUnidade">
+		<pm:content id="pagina">
 			<ui:include src="/rd/menu.xhtml" />
 			<h:form id="formProduto">
-				<p:messages autoUpdate="true" id="msg" showDetail="false" />
-				<p:panel header="Unidade de produto">
+				<p:growl autoUpdate="true" id="msg" showDetail="true" life="2000" />
+				<p:panel header="Unidade de produto" id="panelUnidade">
 					<p:panelGrid columns="1">
 						<pm:field>
 							<p:outputLabel value="Código: " />
@@ -43,26 +43,85 @@
 
 				<p:panelGrid columns="2">
 					<pm:field>
+						<p:commandButton value="Novo" immediate="true" ajax="false"
+							action="#{unidadeProdutoManageBean.novo()}" />
+
+					</pm:field>
+					<pm:field>
 						<p:commandButton value="Salvar" update="@form, msg" ajax="true"
 							actionListener="#{unidadeProdutoManageBean.salvar()}" />
 
 					</pm:field>
 					<pm:field>
-						<p:commandLink ajax="false" immediate="true">
-							<h:graphicImage library="gfx" name="pdf.ico" height="50"
-								width="50" />
-							<p:fileDownload value="#{unidadeProdutoManageBean.fileRelatorio}" />
-							<f:param name="tipoRelatorio" value="1" />
-						</p:commandLink>
-						<p:spacer width="15px" />
-						<p:commandLink ajax="false" immediate="true">
-							<h:graphicImage library="gfx" name="xls.ico" height="50"
-								width="50" />
-							<p:fileDownload value="#{unidadeProdutoManageBean.fileRelatorio}" />
-							<f:param name="tipoRelatorio" value="2" />
-						</p:commandLink>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="pdf.ico" height="50"
+									width="50" />
+								<p:fileDownload
+									value="#{unidadeProdutoManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="1" />
+							</p:commandLink>
+						</center>
+					</pm:field>
+					<pm:field>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="xls.ico" height="50"
+									width="50" />
+								<p:fileDownload
+									value="#{unidadeProdutoManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="2" />
+							</p:commandLink>
+						</center>
 					</pm:field>
 				</p:panelGrid>
+			</h:form>
+
+			<p:spacer height="50px" />
+
+			<h:form id="formPesquisar">
+				<p:panel header="Pesquisar" id="panelPesquisar">
+					<p:panelGrid columns="1" id="panelGridPesquisar">
+
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="descricaoPesquisa"
+								value="#{unidadeProdutoManageBean.descricaoPesquisa}" />
+						</pm:field>
+						<p:commandButton value="Pesquisar" id="botaoPesquisar"
+							update="listaUnidadeProduto" ajax="true"
+							actionListener="#{unidadeProdutoManageBean.pesquisar()}" />
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:dataTable id="listaUnidadeProduto" var="unidade"
+					value="#{unidadeProdutoManageBean.list}" rows="10" paginator="true"
+					paginatorPosition="bottom" lazy="true"
+					paginatorTemplate="{FirstPageLink}
+								   {PreviousPageLink} {PageLinks} 
+	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
+					<p:column headerText="Descrição" width="100">
+						<h:outputText value="#{unidade.descricao}" />
+					</p:column>
+
+					<p:column headerText="Editar" width="50">
+						<h:commandLink value="Editar" immediate="true">
+							<f:setPropertyActionListener
+								target="#{unidadeProdutoManageBean.unidadeProduto}"
+								value="#{unidade}" />
+							<f:ajax render=":paginaUnidade:formProduto" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column headerText="Excluir" width="50">
+						<p:commandLink value="Excluir" immediate="true" ajax="true"
+							update="@form:listaUnidadeProduto"
+							action="#{unidadeProdutoManageBean.excluir()}">
+							<f:param name="unidadeProdutoId" value="#{unidade.id}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
 			</h:form>
 		</pm:content>
 	</pm:page>

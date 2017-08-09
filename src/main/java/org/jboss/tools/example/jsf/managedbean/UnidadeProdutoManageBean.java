@@ -5,25 +5,35 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.jboss.tools.example.projeto.listener.CarregamentoLazyListForObject;
 import org.jboss.tools.example.springmvc.data.IGenericDao;
+import org.jboss.tools.example.springmvc.data.ProdutoDAO;
 import org.jboss.tools.example.springmvc.model.rd.UnidadeProduto;
 import org.jboss.tools.example.springmvc.relatorio.ReportUtil;
 import org.primefaces.model.StreamedContent;
 
-@RequestScoped
+@ViewScoped
 @ManagedBean(name = "unidadeProdutoManageBean")
 public class UnidadeProdutoManageBean {
 
 	private UnidadeProduto unidadeProduto = new UnidadeProduto();
+
+	private CarregamentoLazyListForObject<UnidadeProduto> list = new CarregamentoLazyListForObject<UnidadeProduto>();
 
 	@ManagedProperty(name = "iGenericDao", value = "#{iGenericDao}")
 	private IGenericDao iGenericDao;
 
 	@ManagedProperty(name = "reportUtil", value = "#{reportUtil}")
 	private ReportUtil reportUtil;
+
+	@ManagedProperty(name = "produtoDAO", value = "#{produtoDAO}")
+	private ProdutoDAO produtoDAO;
+
+	private String descricaoPesquisa = "";
 
 	public String salvar() {
 		unidadeProduto = (UnidadeProduto) iGenericDao.merge(unidadeProduto);
@@ -32,8 +42,19 @@ public class UnidadeProdutoManageBean {
 		return "";
 	}
 
-	public void novo() {
+	public void excluir() {
+		String unidadeProdutoId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				.get("unidadeProdutoId");
+		produtoDAO.removeUnidade(Long.parseLong(unidadeProdutoId));
+		ManagedBeanViewUtil.sucesso();
+		pesquisar();
+		novo();
+	}
+
+	public String novo() {
 		unidadeProduto = new UnidadeProduto();
+		list.clean();
+		return "/rd/unidadeproduto.jsf";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -75,6 +96,31 @@ public class UnidadeProdutoManageBean {
 	public StreamedContent getFileRelatorio() throws Exception {
 		reportUtil.setNomeRelatorioJasper("unidadeProduto");
 		return reportUtil.getArquivoReportStreamedContentConnection();
+	}
+
+	public CarregamentoLazyListForObject<UnidadeProduto> getList() {
+		return list;
+	}
+
+	public void pesquisar() {
+		list.clean();
+		list.setQuery(produtoDAO.queryUnidadeDescricao(descricaoPesquisa));
+	}
+
+	public void setDescricaoPesquisa(String descricaoPesquisa) {
+		this.descricaoPesquisa = descricaoPesquisa;
+	}
+
+	public String getDescricaoPesquisa() {
+		return descricaoPesquisa;
+	}
+
+	public void setProdutoDAO(ProdutoDAO produtoDAO) {
+		this.produtoDAO = produtoDAO;
+	}
+
+	public ProdutoDAO getProdutoDAO() {
+		return produtoDAO;
 	}
 
 }

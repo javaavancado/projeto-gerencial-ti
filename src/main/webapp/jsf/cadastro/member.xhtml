@@ -3,13 +3,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pm="http://primefaces.org/mobile">
+	xmlns:p="http://primefaces.org/ui">
 
-<f:view renderKitId="PRIMEFACES_MOBILE" />	
 <h:head></h:head>
 <h:body>
-<pm:page>
 	<h:form>
 		<p:panel header="Cadastro de Usuário">
 			<p:panelGrid columns="3">
@@ -37,6 +34,5 @@
 		</p:panel>
 		<p:commandButton value="Salvar" ajax="false" action="#{userManageBean.salvar()}"/>
 	</h:form>
-</pm:page>	
 </h:body>
 </html>

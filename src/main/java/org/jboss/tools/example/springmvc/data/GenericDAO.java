@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableTransactionManagement
 abstract class GenericDAO<T> {
 
-	@Autowired
 	@PersistenceContext
 	protected EntityManager em;
 
