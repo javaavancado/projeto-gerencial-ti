@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	metadata-complete="true" version="3.0">
 	<display-name>Projeto Gerencial</display-name>
-
 	<session-config>
 		<session-timeout>15</session-timeout> <!-- Invalida a sessão em 15 minutos -->
 		<tracking-mode>COOKIE</tracking-mode>
