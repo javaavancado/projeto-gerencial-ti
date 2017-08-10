@@ -26,7 +26,17 @@ public class CarregamentoLazyListForObject<T> extends LazyDataModel<T> {
 
 			int totalResgistroConsulta = iGenericDao.total(query);
 
-			list = (List<T>) iGenericDao.finLazy(query, first, pageSize);
+			String queryOrder = "";
+			if (sortField != null && !sortField.trim().isEmpty()) {
+				queryOrder += " order by " + sortField;
+				if (sortOrder.name().equals("ASCENDING")) {
+					queryOrder += " asc ";
+				} else if (sortOrder.name().equals("DESCENDING")) {
+					queryOrder += " desc ";
+				}
+			}
+
+			list = (List<T>) iGenericDao.finLazy(query + queryOrder, first, pageSize);
 
 			setRowCount(totalResgistroConsulta);
 			setPageSize(pageSize);

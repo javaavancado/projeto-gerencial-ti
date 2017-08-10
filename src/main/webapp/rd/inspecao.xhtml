@@ -122,7 +122,8 @@
 
 					</pm:field>
 					<pm:field>
-						<p:commandButton value="Salvar"  update="@form, paginaUnidade:formPesquisar, msg" ajax="true"
+						<p:commandButton value="Salvar"
+							update="@form, paginaUnidade:formPesquisar, msg" ajax="true"
 							actionListener="#{inspecaoManageBean.salvar()}" />
 					</pm:field>
 					<pm:field>
@@ -146,13 +147,13 @@
 						</center>
 					</pm:field>
 				</p:panelGrid>
-
 			</h:form>
+
+			<p:spacer height="50px" />
 
 			<h:form id="formPesquisar">
 				<p:panel header="Pesquisar" id="panelPesquisar">
 					<p:panelGrid columns="1" id="panelGridPesquisar">
-
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
 							<p:inputText id="descricaoPesquisa"
@@ -172,8 +173,11 @@
 								   {PreviousPageLink} {PageLinks} 
 	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
 
-					<p:column headerText="Id" width="100">
-						<h:outputText value="#{insp.id}" />
+					<p:column headerText="Data" width="100" sortBy="#{insp.dataInspecao}">
+						<h:outputText value="#{insp.dataInspecao}">
+							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"
+								dateStyle="long" timeStyle="full" timeZone="GMT-03:00" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Empresa">
