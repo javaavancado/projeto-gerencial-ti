@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberServiceImpl implements MermberService{
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private MemberDao memberDao;
 

@@ -35,6 +35,7 @@ public class UploadArquivoBean {
 		
 		//-------LENDO ARQUIVO CSV---------
 		
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(arquivo.getInputStream(), "UTF-8");
 		scanner.useDelimiter(",");
 

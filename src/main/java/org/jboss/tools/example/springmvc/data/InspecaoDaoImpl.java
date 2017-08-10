@@ -59,6 +59,7 @@ public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Inspecao> lista() {
 		return super.em.createQuery("from Inspecao ").getResultList();
@@ -67,6 +68,19 @@ public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO
 	@Override
 	public Inspecao buscar(Long codInspecao) {
 		return super.em.find(Inspecao.class, codInspecao);
+	}
+
+	@Override
+	public void removeInspecao(Long id) {
+		super.em.createQuery("delete from  Inspecao where id = " + id).executeUpdate();
+	}
+
+	@Override
+	public String queryInspecaoDescricao(String descricaoPesquisa) {
+		if (descricaoPesquisa != null && !descricaoPesquisa.trim().isEmpty()) {
+			return " from Inspecao where upper(local) like'%" + descricaoPesquisa.toUpperCase() + "%'";
+		}
+		return " from Inspecao ";
 	}
 
 }

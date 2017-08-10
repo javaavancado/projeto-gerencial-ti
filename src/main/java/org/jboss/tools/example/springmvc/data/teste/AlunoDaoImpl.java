@@ -26,8 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableTransactionManagement
 public class AlunoDaoImpl extends GenericDAOTest<Aluno> implements AlunoDao {
 
-	private static final long serialVersionUID = 582521384015595582L;
-
 	@Override
 	public Aluno merge(Aluno produto) {
 		return super.em.merge(produto);

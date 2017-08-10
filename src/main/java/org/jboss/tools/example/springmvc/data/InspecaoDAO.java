@@ -14,4 +14,8 @@ public interface InspecaoDAO extends Serializable{
 	public Number[] dadoGraficoPorProduto(Long id);
 	
 	public List<Inspecao> lista();
+
+	public void removeInspecao(Long id);
+
+	public String queryInspecaoDescricao(String descricaoPesquisa);
 }

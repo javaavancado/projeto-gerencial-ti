@@ -10,11 +10,11 @@
 
 <h:head></h:head>
 <h:body>
-	<pm:page>
-		<pm:content>
+	<pm:page id="paginaUnidade">
+		<pm:content id="pagina">
 			<ui:include src="/rd/menu.xhtml" />
 			<h:form id="formInspecao">
-			<p:growl autoUpdate="true" id="msg" showDetail="false" life="2000" />
+				<p:growl autoUpdate="true" id="msg" showDetail="false" life="2000" />
 				<p:panel header="Inspeção da Empresa">
 					<p:panelGrid columns="1">
 						<pm:field>
@@ -117,30 +117,61 @@
 
 				<p:panelGrid columns="2">
 					<pm:field>
-						<p:commandButton value="Salvar" update="@all, msg" ajax="true"
+						<p:commandButton value="Novo" immediate="true" ajax="false"
+							action="#{inspecaoManageBean.novo()}" />
+
+					</pm:field>
+					<pm:field>
+						<p:commandButton value="Salvar"  update="@form, paginaUnidade:formPesquisar, msg" ajax="true"
 							actionListener="#{inspecaoManageBean.salvar()}" />
 					</pm:field>
 					<pm:field>
-						<p:commandLink ajax="false" immediate="true">
-							<h:graphicImage library="gfx" name="pdf.ico" height="50"
-								width="50" />
-							<p:fileDownload value="#{inspecaoManageBean.fileRelatorio}" />
-							<f:param name="tipoRelatorio" value="1" />
-						</p:commandLink>
-
-						<p:commandLink ajax="false" immediate="true">
-							<h:graphicImage library="gfx" name="xls.ico" height="50"
-								width="50" />
-							<p:fileDownload value="#{inspecaoManageBean.fileRelatorio}" />
-							<f:param name="tipoRelatorio" value="2" />
-						</p:commandLink>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="pdf.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{inspecaoManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="1" />
+							</p:commandLink>
+						</center>
+					</pm:field>
+					<pm:field>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="xls.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{inspecaoManageBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="2" />
+							</p:commandLink>
+						</center>
 					</pm:field>
 				</p:panelGrid>
 
 			</h:form>
 
-			<h:form id="formList">
-				<p:dataTable var="insp" value="#{inspecaoManageBean.inspecoes}">
+			<h:form id="formPesquisar">
+				<p:panel header="Pesquisar" id="panelPesquisar">
+					<p:panelGrid columns="1" id="panelGridPesquisar">
+
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="descricaoPesquisa"
+								value="#{inspecaoManageBean.descricaoPesquisa}" />
+						</pm:field>
+						<p:commandButton value="Pesquisar" id="botaoPesquisar"
+							update="listaInpecoes" ajax="true"
+							actionListener="#{inspecaoManageBean.pesquisar()}" />
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:dataTable id="listaInpecoes" var="insp"
+					value="#{inspecaoManageBean.list}" rows="10" paginator="true"
+					paginatorPosition="bottom" lazy="true"
+					paginatorTemplate="{FirstPageLink}
+								   {PreviousPageLink} {PageLinks} 
+	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
+
 					<p:column headerText="Id" width="100">
 						<h:outputText value="#{insp.id}" />
 					</p:column>
@@ -151,6 +182,26 @@
 
 					<p:column headerText="Produto">
 						<h:outputText value="#{insp.produto.descricao}" />
+					</p:column>
+
+					<p:column headerText="Editar" width="50">
+						<h:commandLink immediate="true">
+							<f:setPropertyActionListener
+								target="#{inspecaoManageBean.inspecao}" value="#{insp}" />
+							<f:ajax render=":paginaUnidade:formInspecao" />
+							<h:graphicImage value="/resources/gfx/editar.png" width="30"
+								height="30" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column headerText="Excluir" width="50">
+						<p:commandLink immediate="true" ajax="true"
+							update="@form:listaInpecoes"
+							action="#{inspecaoManageBean.excluir()}">
+							<f:param name="inspecaoId" value="#{insp.id}" />
+							<h:graphicImage value="/resources/gfx/delete.png" width="30"
+								height="30" />
+						</p:commandLink>
 					</p:column>
 
 					<p:column headerText="Pdf" width="60">

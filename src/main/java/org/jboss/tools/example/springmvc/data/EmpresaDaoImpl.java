@@ -27,6 +27,7 @@ public class EmpresaDaoImpl extends GenericDAO<Empresa> implements EmpresaDAO {
 		return super.em.find(Empresa.class, codEmpresa);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Empresa> lista() {
 		return super.em.createQuery(" from Empresa ").getResultList();

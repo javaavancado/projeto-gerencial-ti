@@ -30,7 +30,8 @@ public class UploadJsf {
 		
 		//-------LENDO ARQUIVO CVS---------
 		
-		 Scanner scanner = new Scanner(arquivo.getInputStream(), "UTF-8");
+		 @SuppressWarnings("resource")
+		Scanner scanner = new Scanner(arquivo.getInputStream(), "UTF-8");
 		 scanner.useDelimiter(",");
 		
 		 while (scanner.hasNext()){
@@ -54,6 +55,7 @@ public class UploadJsf {
 		InputStream inputStreamFile = arquivo.getInputStream();
 		
 		
+		@SuppressWarnings("resource")
 		Scanner conteudo = new Scanner(inputStreamFile, "UTF-8");
 		conteudo.useDelimiter(",");
 		
