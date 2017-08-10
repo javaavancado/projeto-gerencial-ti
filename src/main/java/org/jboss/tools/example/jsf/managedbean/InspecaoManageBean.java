@@ -61,11 +61,10 @@ public class InspecaoManageBean {
 	}
 
 	@PostConstruct
-	public String novo() {
+	public void novo() {
 		inspecao = new Inspecao();
 		iniciarGrafico();
 		list.clean();
-		return "/rd/inspecao.jsf";
 	}
 
 	public void excluir() {
