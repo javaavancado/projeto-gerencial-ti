@@ -11,4 +11,9 @@ public class ManagedBeanViewUtil {
 		FacesContext.getCurrentInstance().
 		addMessage(null, new FacesMessage("Sucesso!"));
     }
+	
+	public static void msg(String msg){
+		FacesContext.getCurrentInstance().
+		addMessage(null, new FacesMessage(msg + "!"));
+    }
 }

@@ -3,6 +3,7 @@ package org.jboss.tools.example.springmvc.data;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jboss.tools.example.springmvc.model.rd.Imagem;
 import org.jboss.tools.example.springmvc.model.rd.Inspecao;
 
 public interface InspecaoDAO extends Serializable{
@@ -18,4 +19,10 @@ public interface InspecaoDAO extends Serializable{
 	public void removeInspecao(Long id);
 
 	public String queryInspecaoDescricao(String descricaoPesquisa);
+
+	public void removeImagem(Long id);
+	
+	public void removeImagems(Long idInspecao);
+
+	public List<Imagem> carregaImagens(Long idInspecao);	
 }

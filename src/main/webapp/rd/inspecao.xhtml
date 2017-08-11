@@ -151,6 +151,65 @@
 
 			<p:spacer height="50px" />
 
+			<p:panel header="Imagens">
+				<p:panelGrid columns="1" id="tabelaImagensInspecao">
+					<h:form enctype="multipart/form-data">
+						<pm:field>
+							<h:outputLabel value="Imagem" for="imagemUpload" />
+							<p:fileUpload value="#{inspecaoManageBean.file}"
+								id="imagemUpload" mode="simple" skinSimple="true"
+								multiple="false" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="imagemDescricao"
+								value="#{inspecaoManageBean.imagem.imagemDescricao}"
+								required="true"
+								requiredMessage="Informe a descrição da imagem inspecionada." />
+							<p:message for="imagemDescricao" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Data: " for="dataImagem" />
+							<p:calendar id="dataImagem"
+								value="#{inspecaoManageBean.imagem.imagemData}"
+								pattern="dd/MM/yyyy" required="true"
+								requiredMessage="Infoma a data da imagem de inspeção.">
+								<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"
+									dateStyle="long" timeStyle="full" timeZone="GMT-03:00" />
+							</p:calendar>
+							<p:message for="dataImagem" />
+						</pm:field>
+
+						<pm:field>
+							<p:commandButton value="Adicionar" ajax="false"
+								update=":listaImagensUpload"
+								actionListener="#{inspecaoManageBean.upload}" />
+						</pm:field>
+					</h:form>
+				</p:panelGrid>
+
+				<p:dataTable id="listaImagensUpload" var="imagem"
+					value="#{inspecaoManageBean.imagems}" rows="30">
+					<p:column headerText="Imagem">
+						<h:graphicImage width="50" height="50"
+							value="#{imagem.imagemBase64}" />
+					</p:column>
+					<p:column headerText="Excluir" width="50">
+						<p:commandLink immediate="true" ajax="true"
+							update="listaImagensUpload"
+							action="#{inspecaoManageBean.excluirImagem()}">
+							<f:param name="imagemId" value="#{imagem.id}" />
+							<h:graphicImage value="/resources/gfx/delete.png" width="35"
+								height="35" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:spacer height="50px" />
+
 			<h:form id="formPesquisar">
 				<p:panel header="Pesquisar" id="panelPesquisar">
 					<p:panelGrid columns="1" id="panelGridPesquisar">
@@ -173,7 +232,8 @@
 								   {PreviousPageLink} {PageLinks} 
 	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
 
-					<p:column headerText="Data" width="100" sortBy="#{insp.dataInspecao}">
+					<p:column headerText="Data" width="100"
+						sortBy="#{insp.dataInspecao}">
 						<h:outputText value="#{insp.dataInspecao}">
 							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"
 								dateStyle="long" timeStyle="full" timeZone="GMT-03:00" />
@@ -189,12 +249,13 @@
 					</p:column>
 
 					<p:column headerText="Editar" width="50">
-						<h:commandLink immediate="true">
+						<h:commandLink immediate="true" actionListener="#{inspecaoManageBean.carregarEdicao()}">
 							<f:setPropertyActionListener
 								target="#{inspecaoManageBean.inspecao}" value="#{insp}" />
-							<f:ajax render=":paginaUnidade:formInspecao" />
+							<f:ajax render=":paginaUnidade:formInspecao :paginaUnidade:listaImagensUpload"/>
 							<h:graphicImage value="/resources/gfx/editar.png" width="30"
 								height="30" />
+							<f:param name="inspecaoEdicao" value="#{insp.id}"/>	
 						</h:commandLink>
 					</p:column>
 
@@ -210,8 +271,8 @@
 
 					<p:column headerText="Pdf" width="60">
 						<p:commandLink ajax="false" immediate="true">
-							<h:graphicImage library="gfx" name="pdf.ico" height="50"
-								width="50" />
+							<h:graphicImage library="gfx" name="pdf.ico" height="30"
+								width="30" />
 							<f:param name="inspecaoId" value="#{insp.id}" />
 							<f:param name="tipoRelatorio" value="1" />
 							<p:fileDownload value="#{inspecaoManageBean.fileRelatorioUnico}" />

@@ -9,10 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import org.jboss.tools.example.springmvc.data.teste.UploadDao;
 import org.jboss.tools.example.springmvc.model.teste.Aluno;
 import org.jboss.tools.example.springmvc.model.teste.ArquivoUpload;
+import org.primefaces.event.FileUploadEvent;
 
 @RequestScoped
 @ManagedBean(name = "uploadJsf")
@@ -102,6 +104,11 @@ public class UploadJsf {
 			reads = is.read();
 		}
 		return baos.toByteArray();
+	}
+	
+	public void handleFileUpload(FileUploadEvent event) throws Exception {
+		String miniImgBase64 = DatatypeConverter.printBase64Binary(event.getFile().getContents());
+		System.out.println(miniImgBase64);
 	}
 
 }

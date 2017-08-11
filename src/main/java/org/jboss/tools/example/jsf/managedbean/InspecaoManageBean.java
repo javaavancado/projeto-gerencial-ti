@@ -1,5 +1,6 @@
 package org.jboss.tools.example.jsf.managedbean;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +11,18 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.xml.bind.DatatypeConverter;
 
 import org.jboss.tools.example.projeto.listener.CarregamentoLazyListForObject;
 import org.jboss.tools.example.springmvc.data.EmpresaDAO;
 import org.jboss.tools.example.springmvc.data.IGenericDao;
 import org.jboss.tools.example.springmvc.data.InspecaoDAO;
+import org.jboss.tools.example.springmvc.model.rd.Imagem;
 import org.jboss.tools.example.springmvc.model.rd.Inspecao;
 import org.jboss.tools.example.springmvc.model.rd.Produto;
 import org.jboss.tools.example.springmvc.relatorio.ReportUtil;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
@@ -48,11 +52,17 @@ public class InspecaoManageBean {
 
 	private String descricaoPesquisa = "";
 
+	private List<Imagem> imagems = new ArrayList<Imagem>();
+
+	private UploadedFile file;
+
+	private Imagem imagem = new Imagem();
+
 	public String salvar() {
 		inspecao = inspecaoDAO.merge(inspecao);
 		ManagedBeanViewUtil.sucesso();
-		novo();
-		pesquisar();
+		// novo();
+		// pesquisar();
 		return "";
 	}
 
@@ -65,6 +75,8 @@ public class InspecaoManageBean {
 		inspecao = new Inspecao();
 		iniciarGrafico();
 		list.clean();
+		imagems.clear();
+		imagem = new Imagem();
 	}
 
 	public void excluir() {
@@ -74,6 +86,19 @@ public class InspecaoManageBean {
 		ManagedBeanViewUtil.sucesso();
 		novo();
 		pesquisar();
+	}
+
+	public void excluirImagem() {
+		String imagemId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				.get("imagemId");
+		inspecaoDAO.removeImagem(Long.parseLong(imagemId));
+		for (int i = 0; i <= imagems.size(); i++) {
+			if (imagemId.equals(imagems.get(i).getId().toString())) {
+				imagems.remove(i);
+				break;
+			}
+		}
+		ManagedBeanViewUtil.sucesso();
 	}
 
 	private void iniciarGrafico() {
@@ -191,6 +216,61 @@ public class InspecaoManageBean {
 
 	public void setDescricaoPesquisa(String descricaoPesquisa) {
 		this.descricaoPesquisa = descricaoPesquisa;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public List<Imagem> getImagems() {
+		return imagems;
+	}
+
+	public void setImagems(List<Imagem> imagems) {
+		this.imagems = imagems;
+	}
+
+	public Imagem getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(Imagem imagem) {
+		this.imagem = imagem;
+	}
+
+	public void upload() throws IOException {
+
+		if (inspecao.getId() == null || (inspecao.getId() != null && inspecao.getId() <= 0)) {
+			ManagedBeanViewUtil.msg("Cadastre a inspeção");
+			return;
+		}
+
+		if (file != null && file.getContents() != null && file.getContents().length > 0) {
+
+			String miniImgBase64 = "data:" + file.getContentType() + ";base64,"
+					+ DatatypeConverter.printBase64Binary(file.getContents());
+
+			imagem.setImagemBase64(miniImgBase64);
+			imagem.setInspecao(getInspecao());
+			imagem.setImagem(file.getContents());
+			imagem = (Imagem) iGenericDao.merge(imagem);
+			imagems.add(imagem);
+
+			imagem = new Imagem();
+			ManagedBeanViewUtil.sucesso();
+		} else {
+			ManagedBeanViewUtil.msg("Escolha a imagem");
+		}
+	}
+	
+	public void carregarEdicao(){
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String inspecaoId = params.get("inspecaoEdicao");
+		imagems = inspecaoDAO.carregaImagens(Long.parseLong(inspecaoId));
 	}
 
 }

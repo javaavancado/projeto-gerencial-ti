@@ -18,6 +18,7 @@ package org.jboss.tools.example.springmvc.data;
 
 import java.util.List;
 
+import org.jboss.tools.example.springmvc.model.rd.Imagem;
 import org.jboss.tools.example.springmvc.model.rd.Inspecao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -72,6 +73,7 @@ public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO
 
 	@Override
 	public void removeInspecao(Long id) {
+		this.removeImagems(id);
 		super.em.createQuery("delete from  Inspecao where id = " + id).executeUpdate();
 	}
 
@@ -81,6 +83,21 @@ public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO
 			return " from Inspecao where upper(local) like'%" + descricaoPesquisa.toUpperCase() + "%'";
 		}
 		return " from Inspecao ";
+	}
+
+	@Override
+	public void removeImagem(Long id) {
+		super.em.createQuery("delete from  Imagem where id = " + id).executeUpdate();
+	}
+	
+	@Override
+	public void removeImagems(Long idinspecao) {
+		super.em.createQuery("delete from  Imagem where inspecao.id = " + idinspecao).executeUpdate();
+	}
+
+	@Override
+	public List<Imagem> carregaImagens(Long idInspecao) {
+		return super.em.createQuery("from Imagem where inspecao.id = " + idInspecao).getResultList();
 	}
 
 }

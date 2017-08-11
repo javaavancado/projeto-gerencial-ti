@@ -1,58 +1,72 @@
 package org.jboss.tools.example.springmvc.model.rd;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  * The persistent class for the imagem database table.
  * 
  */
 @Entity
-@NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i")
+@NamedQuery(name = "Imagem.findAll", query = "SELECT i FROM Imagem i")
+@SequenceGenerator(initialValue = 1, allocationSize = 1, sequenceName = "imagem_sequence", name = "imagem_sequence")
 public class Imagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "imagem_sequence")
+	private Long id;
 
 	@Lob
 	private byte[] imagem;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="imagem_data")
-	private Date imagemData;
+	@Column(name = "imagem_data")
+	private Date imagemData = Calendar.getInstance().getTime();
 
-	@Column(name="imagem_descricao")
+	@Column(name = "imagem_descricao")
 	private String imagemDescricao;
 
-	@Column(name="imagem_nome")
-	private String imagemNome;
+	@Column(columnDefinition = "text", length = 100000)
+	private String imagemBase64;
 
-	@Column(name="tarefa_fk")
-	private int tarefaFk;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id", name = "inspecao_id", nullable = false)
+	@org.hibernate.annotations.ForeignKey(name = "inspecao_id")
+	private Inspecao inspecao = new Inspecao();
 
-	public Imagem() {
+	public void setInspecao(Inspecao inspecao) {
+		this.inspecao = inspecao;
 	}
 
-	public int getId() {
-		return this.id;
+	public Inspecao getInspecao() {
+		return inspecao;
 	}
 
-	public void setId(int id) {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	public byte[] getImagem() {
-		return this.imagem;
+		return imagem;
 	}
 
 	public void setImagem(byte[] imagem) {
@@ -60,7 +74,7 @@ public class Imagem implements Serializable {
 	}
 
 	public Date getImagemData() {
-		return this.imagemData;
+		return imagemData;
 	}
 
 	public void setImagemData(Date imagemData) {
@@ -68,27 +82,19 @@ public class Imagem implements Serializable {
 	}
 
 	public String getImagemDescricao() {
-		return this.imagemDescricao;
+		return imagemDescricao;
+	}
+
+	public void setImagemBase64(String imagemBase64) {
+		this.imagemBase64 = imagemBase64;
+	}
+
+	public String getImagemBase64() {
+		return imagemBase64;
 	}
 
 	public void setImagemDescricao(String imagemDescricao) {
 		this.imagemDescricao = imagemDescricao;
-	}
-
-	public String getImagemNome() {
-		return this.imagemNome;
-	}
-
-	public void setImagemNome(String imagemNome) {
-		this.imagemNome = imagemNome;
-	}
-
-	public int getTarefaFk() {
-		return this.tarefaFk;
-	}
-
-	public void setTarefaFk(int tarefaFk) {
-		this.tarefaFk = tarefaFk;
 	}
 
 }
