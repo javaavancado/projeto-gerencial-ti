@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.jboss.tools.example.springmvc.model.rd.Imagem;
 import org.jboss.tools.example.springmvc.model.rd.Inspecao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO {
 
 	private static final long serialVersionUID = 582521384015595582L;
+	
+	@Autowired
+	private NcfDAO ncfDAO;
 
 	@Override
 	public Inspecao merge(Inspecao inspecao) {
@@ -73,6 +77,7 @@ public class InspecaoDaoImpl extends GenericDAO<Inspecao> implements InspecaoDAO
 
 	@Override
 	public void removeInspecao(Long id) {
+		ncfDAO.removeNcfs(id);
 		this.removeImagems(id);
 		super.em.createQuery("delete from  Inspecao where id = " + id).executeUpdate();
 	}

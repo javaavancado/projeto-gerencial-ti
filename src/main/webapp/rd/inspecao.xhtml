@@ -115,7 +115,7 @@
 
 				<p:spacer height="50px" />
 
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="3">
 					<pm:field>
 						<p:commandButton value="Novo" immediate="true" ajax="false"
 							action="/rd/inspecao.jsf" />
@@ -127,6 +127,13 @@
 							actionListener="#{inspecaoManageBean.salvar()}" />
 					</pm:field>
 					<pm:field>
+						<p:commandButton value="NCF"
+							ajax="false" disabled="#{inspecaoManageBean.inspecao.id == null}"
+							action="/rd/ncf.jsf?faces-redirect=true">
+							<f:setPropertyActionListener value="#{inspecaoManageBean.inspecao}" target="#{ncfManagedBean.naoConformidade.inspecao}" />
+						</p:commandButton>
+					</pm:field>
+					<pm:field>
 						<center>
 							<p:commandLink ajax="false" immediate="true">
 								<h:graphicImage library="gfx" name="pdf.ico" height="50"
@@ -136,6 +143,9 @@
 							</p:commandLink>
 						</center>
 					</pm:field>
+					
+					<pm:field />
+					
 					<pm:field>
 						<center>
 							<p:commandLink ajax="false" immediate="true">
@@ -249,13 +259,15 @@
 					</p:column>
 
 					<p:column headerText="Editar" width="50">
-						<h:commandLink immediate="true" actionListener="#{inspecaoManageBean.carregarEdicao()}">
+						<h:commandLink immediate="true"
+							actionListener="#{inspecaoManageBean.carregarEdicao()}">
 							<f:setPropertyActionListener
 								target="#{inspecaoManageBean.inspecao}" value="#{insp}" />
-							<f:ajax render=":paginaUnidade:formInspecao :paginaUnidade:listaImagensUpload"/>
+							<f:ajax
+								render=":paginaUnidade:formInspecao :paginaUnidade:listaImagensUpload" />
 							<h:graphicImage value="/resources/gfx/editar.png" width="30"
 								height="30" />
-							<f:param name="inspecaoEdicao" value="#{insp.id}"/>	
+							<f:param name="inspecaoEdicao" value="#{insp.id}" />
 						</h:commandLink>
 					</p:column>
 

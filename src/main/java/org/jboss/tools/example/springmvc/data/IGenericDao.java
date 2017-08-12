@@ -9,7 +9,7 @@ public interface IGenericDao {
 	void remover(Object object);
 
 	Object find(Class<?> classs, Object primarikey);
-
+	
 	public List<?> list(Class<?> classs);
 
 	int total(String query);

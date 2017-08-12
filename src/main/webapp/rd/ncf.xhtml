@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:head></h:head>
+<h:body>
+	<pm:page id="paginaUnidade">
+		<pm:content id="pagina">
+			<ui:include src="/rd/menu.xhtml" />
+			<h:form id="formInspecao">
+				<p:growl autoUpdate="true" id="msg" showDetail="false" life="2000" />
+				<p:panel header="Não Conformidade">
+					<p:panelGrid columns="1">
+						<pm:field>
+							<p:outputLabel value="Inspeção: " />
+							<p:inputText id="id" readonly="true" disabled="true"
+								value="#{ncfManagedBean.naoConformidade.inspecao.id}" />
+							<p:message for="id" />
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Descrição: " />
+							<p:inputText id="descricao"
+								value="#{ncfManagedBean.naoConformidade.descricao}"
+								required="true" requiredMessage="Informe a descrição." />
+							<p:message for="descricao" />
+						</pm:field>
+						<pm:field>
+							<p:outputLabel value="Data: " />
+							<p:calendar id="dataInspecao"
+								value="#{ncfManagedBean.naoConformidade.dataNcf}"
+								pattern="dd/MM/yyyy" required="true"
+								requiredMessage="Infoma a data da ncf.">
+								<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"
+									dateStyle="long" timeStyle="full" timeZone="GMT-03:00" />
+							</p:calendar>
+							<p:message for="dataInspecao" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Disposição: " />
+							<p:inputText id="disposicao"
+								value="#{ncfManagedBean.naoConformidade.disposicao}"
+								required="true" requiredMessage="Informe a disposição." />
+							<p:message for="disposicao" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="E-mail Resp. " />
+							<p:inputText id="responsavelEmail"
+								value="#{ncfManagedBean.naoConformidade.responsavelEmail}"
+								required="true"
+								requiredMessage="Informe o e-mail do responsável." />
+							<p:message for="responsavelEmail" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Data Eficácia: " />
+							<p:calendar id="data_eficacia"
+								value="#{ncfManagedBean.naoConformidade.data_eficacia}"
+								pattern="dd/MM/yyyy" required="true"
+								requiredMessage="Infoma a data da Eficácia">
+								<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"
+									dateStyle="long" timeStyle="full" timeZone="GMT-03:00" />
+							</p:calendar>
+							<p:message for="data_eficacia" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Visualização: " />
+							<p:inputText id="reponsavel_ver"
+								value="#{ncfManagedBean.naoConformidade.reponsavel_ver}"
+								readonly="true" />
+							<p:message for="reponsavel_ver" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Verificação: " />
+							<p:selectBooleanCheckbox id="verificacao"
+								value="#{ncfManagedBean.naoConformidade.verificacao}" />
+							<p:message for="verificacao" />
+						</pm:field>
+
+						<pm:field>
+							<p:outputLabel value="Comentário: " />
+							<p:inputText id="comentario"
+								value="#{ncfManagedBean.naoConformidade.comentario}" />
+							<p:message for="comentario" />
+						</pm:field>
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:spacer height="50px" />
+
+				<p:panelGrid columns="2">
+					<pm:field>
+						<p:commandButton value="Novo" immediate="true" ajax="false"
+							action="/rd/ncf.jsf" actionListener="#{ncfManagedBean.novo()}" />
+
+					</pm:field>
+					<pm:field>
+						<p:commandButton value="Salvar"
+							update="@form, paginaUnidade:formPesquisar, msg" ajax="true"
+							actionListener="#{ncfManagedBean.salvar()}" />
+					</pm:field>
+					<pm:field>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="pdf.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{ncfManagedBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="1" />
+							</p:commandLink>
+						</center>
+					</pm:field>
+
+					<pm:field>
+						<center>
+							<p:commandLink ajax="false" immediate="true">
+								<h:graphicImage library="gfx" name="xls.ico" height="50"
+									width="50" />
+								<p:fileDownload value="#{ncfManagedBean.fileRelatorio}" />
+								<f:param name="tipoRelatorio" value="2" />
+							</p:commandLink>
+						</center>
+					</pm:field>
+				</p:panelGrid>
+			</h:form>
+
+			<p:spacer height="50px" />
+
+			<h:form id="formPesquisar">
+
+				<p:panel header="Pesquisar" id="panelPesquisar">
+					<p:panelGrid columns="1" id="panelGridPesquisar">
+						<pm:field>
+							<p:commandButton value="Pesquisar" id="botaoPesquisar"
+								update="listaInpecoes" ajax="true"
+								actionListener="#{ncfManagedBean.pesquisar()}" />
+						</pm:field>
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:spacer height="50px" />
+
+				<p:dataTable id="listaInpecoes" var="insp"
+					value="#{ncfManagedBean.list}" rows="10" paginator="true"
+					paginatorPosition="bottom" lazy="true"
+					paginatorTemplate="{FirstPageLink}
+								   {PreviousPageLink} {PageLinks} 
+	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
+
+					<p:column headerText="Data" width="100" sortBy="#{insp.dataNcf}">
+						<h:outputText value="#{insp.dataNcf}">
+							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"
+								dateStyle="long" timeStyle="full" timeZone="GMT-03:00" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{insp.descricao}" />
+					</p:column>
+
+					<p:column headerText="Editar" width="50">
+						<h:commandLink immediate="true"
+							actionListener="#{ncfManagedBean.carregarEdicao()}">
+							<f:setPropertyActionListener
+								target="#{ncfManagedBean.naoConformidade}" value="#{insp}" />
+							<f:ajax render=":paginaUnidade:formInspecao" />
+							<h:graphicImage value="/resources/gfx/editar.png" width="30"
+								height="30" />
+							<f:param name="inspecaoEdicao" value="#{insp.id}" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column headerText="Excluir" width="50">
+						<p:commandLink immediate="true" ajax="true"
+							update="@form:listaInpecoes" action="#{ncfManagedBean.excluir()}">
+							<f:param name="ncfID" value="#{insp.id}" />
+							<h:graphicImage value="/resources/gfx/delete.png" width="30"
+								height="30" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</pm:content>
+	</pm:page>
+</h:body>
+</html>
