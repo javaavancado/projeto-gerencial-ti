@@ -6,8 +6,11 @@
 <head>
 <title>Sistema de controle gerencial</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <link rel="shortcut icon" href="resources/gfx/favicon.ico" type="image/x-icon"/>
+
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/static/resources/css/screen.css"/>" />
+	
 </head>
 
 <body>
