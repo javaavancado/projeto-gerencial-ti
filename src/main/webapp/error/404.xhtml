@@ -5,6 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+<f:view renderKitId="PRIMEFACES_MOBILE" />
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html/ charset=UTF-8" />
 	<title><ui:insert name="titulo">Sistema</ui:insert></title>
@@ -12,11 +13,11 @@
 
 <h:form>
 	<h:body>
-		 <p:panel id="panelPageNotFound" header="Aviso">
-		 		<h:graphicImage library="gfx" name="page_not_found.jpeg">
-		 			<h:outputLabel value="Página não foi encontrada." />
-		 		</h:graphicImage>
-		 </p:panel>
+		<p:panel id="panelPageNotFound" header="Aviso">
+			<h:graphicImage library="gfx" name="page_not_found.jpeg">
+				<h:outputLabel value="Página não foi encontrada." />
+			</h:graphicImage>
+		</p:panel>
 	</h:body>
 </h:form>
 </html>

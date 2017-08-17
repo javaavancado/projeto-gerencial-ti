@@ -27,14 +27,14 @@
 
 						<pm:field>
 							<p:outputLabel value="Código: " />
-							<p:inputText id="id" readonly="true"
+							<p:inputText maxlength="250"   id="id" readonly="true"
 								value="#{produtoManageBean.produto.id}" />
 							<p:message for="id" />
 						</pm:field>
 
 						<pm:field>
 							<p:outputLabel value="Nome: " />
-							<p:inputText id="nome_produto"
+							<p:inputText maxlength="250"   id="nome_produto"
 								value="#{produtoManageBean.produto.nome_produto}"
 								required="true" requiredMessage="Informe o nome do produto." />
 							<p:message for="nome_produto" />
@@ -63,7 +63,7 @@
 						</pm:field>
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricao"
+							<p:inputText maxlength="250"   id="descricao"
 								value="#{produtoManageBean.produto.descricao}" required="true"
 								requiredMessage="Informe a decrição produto." />
 							<p:message for="descricao" />
@@ -124,7 +124,7 @@
 
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricaoPesquisa"
+							<p:inputText maxlength="250"   id="descricaoPesquisa"
 								value="#{produtoManageBean.descricaoPesquisa}" />
 						</pm:field>
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"

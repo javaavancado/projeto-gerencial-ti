@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inspecao" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="734d93e3-dc27-491a-baa0-0d4716165661">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="52"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -49,6 +49,12 @@
 	</title>
 	<detail>
 		<band height="148" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="10" width="802" height="20" backcolor="#999999" uuid="3890b164-89fb-4107-869c-bc7595945bd5"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="83" width="802" height="65" backcolor="#CCCCCC" uuid="747b1748-80e9-4e63-9ac7-6c2209156d7a"/>
 				<graphicElement>

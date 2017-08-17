@@ -95,8 +95,9 @@ public class UnidadeProdutoManageBean {
 	}
 
 	public StreamedContent getFileRelatorio() throws Exception {
+		reportUtil.setListDataBeanCollectionReport(iGenericDao.list(UnidadeProduto.class));
 		reportUtil.setNomeRelatorioJasper("unidadeProduto");
-		return reportUtil.getArquivoReportStreamedContentConnection();
+		return reportUtil.getArquivoReportStreamedContent();
 	}
 
 	public CarregamentoLazyListForObject<UnidadeProduto> getList() {

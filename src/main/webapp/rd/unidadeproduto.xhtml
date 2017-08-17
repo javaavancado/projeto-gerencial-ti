@@ -19,20 +19,20 @@
 					<p:panelGrid columns="1">
 						<pm:field>
 							<p:outputLabel value="Código: " />
-							<p:inputText id="id" readonly="true"
+							<p:inputText maxlength="250"   id="id" readonly="true"
 								value="#{unidadeProdutoManageBean.unidadeProduto.id}" />
 							<p:message for="id" />
 						</pm:field>
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricao" required="true"
+							<p:inputText maxlength="250"   id="descricao" required="true"
 								requiredMessage="Informe a descrição."
 								value="#{unidadeProdutoManageBean.unidadeProduto.descricao}" />
 							<p:message for="descricao" />
 						</pm:field>
 						<pm:field>
 							<p:outputLabel value="Sigla: " />
-							<p:inputText id="sigla"
+							<p:inputText maxlength="250"   id="sigla"
 								value="#{unidadeProdutoManageBean.unidadeProduto.sigla}" />
 							<p:message for="sigla" />
 						</pm:field>
@@ -85,7 +85,7 @@
 
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricaoPesquisa"
+							<p:inputText maxlength="250"   id="descricaoPesquisa"
 								value="#{unidadeProdutoManageBean.descricaoPesquisa}" />
 						</pm:field>
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"

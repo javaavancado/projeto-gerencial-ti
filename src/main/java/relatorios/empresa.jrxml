@@ -28,7 +28,13 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="111" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="91" width="802" height="20" isPrintInFirstWholeBand="true" backcolor="#999999" uuid="328fcb02-b855-4536-bfd1-f8178e4f7090"/>
+				<graphicElement>
+					<pen lineWidth="0.0" lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="802" height="79" uuid="294931ce-cdff-4545-a9e0-c016d3956c20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -36,34 +42,53 @@
 				</textElement>
 				<text><![CDATA[Empresa]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="91" width="100" height="20" uuid="30af2d8b-5567-4e7a-9cee-b87209dcf16a"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="91" width="100" height="20" uuid="1677017a-10e2-4d04-920d-7270942b5833"/>
+				<text><![CDATA[Responsável]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="91" width="108" height="20" uuid="76eedcf2-4a74-47bc-beb5-61b41672251e"/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="91" width="108" height="20" uuid="298e1da2-4df3-4ed5-acd7-3374d5068b94"/>
+				<text><![CDATA[Atividade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="649" y="91" width="108" height="20" uuid="5001cc4a-b9a9-4ec4-8ba1-06079f06a8eb"/>
+				<text><![CDATA[Fiscal]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="133" height="20" uuid="958bfe6e-49c3-462d-83a1-a8e1ad73d990"/>
+				<reportElement x="0" y="0" width="172" height="20" uuid="958bfe6e-49c3-462d-83a1-a8e1ad73d990"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="133" y="0" width="133" height="20" uuid="5f48a777-a1dc-4415-aeda-9bf6c262bd84"/>
+				<reportElement x="172" y="0" width="196" height="20" uuid="5f48a777-a1dc-4415-aeda-9bf6c262bd84"/>
 				<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="266" y="0" width="133" height="20" uuid="d3f5f08f-a707-4bcb-8b59-3f22f3113b88"/>
+				<reportElement x="368" y="0" width="108" height="20" uuid="d3f5f08f-a707-4bcb-8b59-3f22f3113b88"/>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="399" y="0" width="133" height="20" uuid="b31b5140-c087-4506-8356-d6552eb79134"/>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="532" y="0" width="133" height="20" uuid="c648f654-ae98-407d-a606-53065ed920e0"/>
+				<reportElement x="476" y="0" width="173" height="20" uuid="c648f654-ae98-407d-a606-53065ed920e0"/>
 				<textFieldExpression><![CDATA[$F{ramo_de_atividade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="665" y="0" width="133" height="20" uuid="c552feda-ace0-41fa-b3e4-fb2c6c792ac6"/>
+				<reportElement x="665" y="0" width="137" height="20" uuid="c552feda-ace0-41fa-b3e4-fb2c6c792ac6"/>
 				<textFieldExpression><![CDATA[$F{tipoFiscal}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="23" width="802" height="1" uuid="e73eedca-dc54-4f36-8bfe-c12b5afad733"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

@@ -19,13 +19,13 @@
 					<p:panelGrid columns="1">
 						<pm:field>
 							<p:outputLabel value="Inspeção: " />
-							<p:inputText id="id" readonly="true" disabled="true"
+							<p:inputText maxlength="250"   id="id" readonly="true" disabled="true"
 								value="#{ncfManagedBean.naoConformidade.inspecao.id}" />
 							<p:message for="id" />
 						</pm:field>
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricao"
+							<p:inputText maxlength="250"   id="descricao"
 								value="#{ncfManagedBean.naoConformidade.descricao}"
 								required="true" requiredMessage="Informe a descrição." />
 							<p:message for="descricao" />
@@ -44,7 +44,7 @@
 
 						<pm:field>
 							<p:outputLabel value="Disposição: " />
-							<p:inputText id="disposicao"
+							<p:inputText maxlength="250"   id="disposicao"
 								value="#{ncfManagedBean.naoConformidade.disposicao}"
 								required="true" requiredMessage="Informe a disposição." />
 							<p:message for="disposicao" />
@@ -52,7 +52,7 @@
 
 						<pm:field>
 							<p:outputLabel value="E-mail Resp. " />
-							<p:inputText id="responsavelEmail"
+							<p:inputText maxlength="250"   id="responsavelEmail"
 								value="#{ncfManagedBean.naoConformidade.responsavelEmail}"
 								required="true"
 								requiredMessage="Informe o e-mail do responsável." />
@@ -73,7 +73,7 @@
 
 						<pm:field>
 							<p:outputLabel value="Visualização: " />
-							<p:inputText id="reponsavel_ver"
+							<p:inputText maxlength="250"   id="reponsavel_ver"
 								value="#{ncfManagedBean.naoConformidade.reponsavel_ver}"
 								readonly="true" />
 							<p:message for="reponsavel_ver" />
@@ -88,7 +88,7 @@
 
 						<pm:field>
 							<p:outputLabel value="Comentário: " />
-							<p:inputText id="comentario"
+							<p:inputText maxlength="250"   id="comentario"
 								value="#{ncfManagedBean.naoConformidade.comentario}" />
 							<p:message for="comentario" />
 						</pm:field>

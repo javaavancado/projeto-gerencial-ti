@@ -20,21 +20,21 @@
 
 						<pm:field>
 							<p:outputLabel value="Código: " />
-							<p:inputText id="id" readonly="true"
+							<p:inputText maxlength="250"   id="id" readonly="true"
 								value="#{empresaManageBean.empresa.id}" />
 							<p:message for="id" />
 						</pm:field>
 
 						<pm:field>
 							<p:outputLabel value="Nome: " />
-							<p:inputText id="nome" value="#{empresaManageBean.empresa.nome}"
+							<p:inputText maxlength="250"   id="nome" value="#{empresaManageBean.empresa.nome}"
 								required="true" requiredMessage="Informe o nome." />
 							<p:message for="nome" />
 						</pm:field>
 
 						<pm:field>
 							<p:outputLabel value="Ramo de Atividade: " />
-							<p:inputText id="ramo"
+							<p:inputText maxlength="250"   id="ramo"
 								value="#{empresaManageBean.empresa.ramo_de_atividade}"
 								required="true" requiredMessage="Informe o ramo de atividade." />
 							<p:message for="ramo" />
@@ -49,14 +49,14 @@
 
 						<pm:field>
 							<p:outputLabel value="Tipo Fiscal: " />
-							<p:inputText id="tipoFiscal"
+							<p:inputText maxlength="250"   id="tipoFiscal"
 								value="#{empresaManageBean.empresa.tipoFiscal}" />
 							<p:message for="tipoFiscal" />
 						</pm:field>
 
 						<pm:field>
 							<p:outputLabel value="Responsável: " />
-							<p:inputText id="responsavel"
+							<p:inputText maxlength="250"   id="responsavel"
 								value="#{empresaManageBean.empresa.responsavel}" required="true"
 								requiredMessage="Informe o responsável" />
 							<p:message for="responsavel" />
@@ -113,7 +113,7 @@
 
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricaoPesquisa"
+							<p:inputText maxlength="250"   id="descricaoPesquisa"
 								value="#{empresaManageBean.descricaoPesquisa}" />
 						</pm:field>
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"

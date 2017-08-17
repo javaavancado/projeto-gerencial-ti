@@ -19,7 +19,7 @@
 					<p:panelGrid columns="1">
 						<pm:field>
 							<p:outputLabel value="Código: " />
-							<p:inputText id="id" readonly="true"
+							<p:inputText maxlength="250"   id="id" readonly="true"
 								value="#{inspecaoManageBean.inspecao.id}" />
 							<p:message for="id" />
 						</pm:field>
@@ -60,21 +60,21 @@
 						</pm:field>
 						<pm:field>
 							<p:outputLabel value="Local: " />
-							<p:inputText id="local"
+							<p:inputText maxlength="250"   id="local"
 								value="#{inspecaoManageBean.inspecao.local}" required="true"
 								requiredMessage="Informe o local da inspeção." />
 							<p:message for="local" />
 						</pm:field>
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricao"
+							<p:inputText maxlength="250"   id="descricao"
 								value="#{inspecaoManageBean.inspecao.descricao}" required="true"
 								requiredMessage="Informe descrição da inspeção." />
 							<p:message for="descricao" />
 						</pm:field>
 						<pm:field>
 							<p:outputLabel value="E-mail: " />
-							<p:inputText id="responsavel_email"
+							<p:inputText maxlength="250"   id="responsavel_email"
 								value="#{inspecaoManageBean.inspecao.responsavel_email}"
 								required="true"
 								requiredMessage="Informe o e-mail do responsável." />
@@ -173,7 +173,7 @@
 
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="imagemDescricao"
+							<p:inputText maxlength="250"   id="imagemDescricao"
 								value="#{inspecaoManageBean.imagem.imagemDescricao}"
 								required="true"
 								requiredMessage="Informe a descrição da imagem inspecionada." />
@@ -225,7 +225,7 @@
 					<p:panelGrid columns="1" id="panelGridPesquisar">
 						<pm:field>
 							<p:outputLabel value="Descrição: " />
-							<p:inputText id="descricaoPesquisa"
+							<p:inputText maxlength="250"   id="descricaoPesquisa"
 								value="#{inspecaoManageBean.descricaoPesquisa}" />
 						</pm:field>
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"
