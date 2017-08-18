@@ -32,6 +32,23 @@
 				<f:ajax execute="@form" render="@all" />
 			</h:commandButton>
 		</p:panelGrid>
+		
+		<h:dataTable value="#{uploadArquivoBean.list}" var="file" width="100%">
+			<h:column>
+				<h:outputText value="#{file.id}" />
+			</h:column>
+			
+			<h:column>
+				<h:outputText value="#{file.descricao}" />
+			</h:column>
+			
+			<h:column>
+				<h:commandLink immediate="true" 
+				actionListener="#{uploadArquivoBean.download}" value="Download">
+				<f:param name="fileDownloadId" value="#{file.id}"/>
+				</h:commandLink>
+			</h:column>
+		</h:dataTable>
 	</h:form>
 </body>
 </html>

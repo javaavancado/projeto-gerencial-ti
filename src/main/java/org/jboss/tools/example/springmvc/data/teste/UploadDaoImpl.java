@@ -16,6 +16,8 @@
  */
 package org.jboss.tools.example.springmvc.data.teste;
 
+import java.util.List;
+
 import org.jboss.tools.example.springmvc.model.teste.ArquivoUpload;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -29,6 +31,16 @@ public class UploadDaoImpl extends GenericDAOTest<ArquivoUpload> implements Uplo
 	@Override
 	public void salvar(ArquivoUpload arquivoUpload) {
 		super.em.persist(arquivoUpload);
+	}
+
+	@Override
+	public List<ArquivoUpload> lista() {
+		return super.em.createQuery("from ArquivoUpload").getResultList();
+	}
+
+	@Override
+	public ArquivoUpload busca(Long id) {
+		return super.em.find(ArquivoUpload.class, id);
 	}
 
 }

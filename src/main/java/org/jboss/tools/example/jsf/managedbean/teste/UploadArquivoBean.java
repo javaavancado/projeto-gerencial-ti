@@ -3,11 +3,17 @@ package org.jboss.tools.example.jsf.managedbean.teste;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.jboss.tools.example.springmvc.data.teste.AlunoDao;
@@ -29,6 +35,8 @@ public class UploadArquivoBean {
 	private AlunoDao alunoDao;
 
 	private Part arquivo;
+	
+	private List<ArquivoUploadAula> list = new ArrayList<ArquivoUploadAula>();
 	
 	
 	public void upload () throws IOException{
@@ -60,8 +68,33 @@ public class UploadArquivoBean {
 		byte[] arquivoByte = toByteArrayUsingJava(arquivo.getInputStream());  
 		arquivoUploadAula.setArquivo(arquivoByte);
 		uploadArquivoAula.salvar(arquivoUploadAula);
+		
+		carregarLista();
 	}
 	
+	public void download() throws IOException{
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String fileDownloadId = params.get("fileDownloadId");
+		
+		ArquivoUploadAula arquivoUploadAula = uploadArquivoAula.buscar(fileDownloadId);
+		
+		HttpServletResponse response = (HttpServletResponse) FacesContext.
+				getCurrentInstance().getExternalContext()
+				.getResponse();
+		response.addHeader("Content-Disposition", "attachment; filename=download.csv");
+		response.setContentType("application/octet-stream");
+		response.setContentLength(arquivoUploadAula.getArquivo().length);
+		response.getOutputStream().write(arquivoUploadAula.getArquivo());
+		response.getOutputStream().flush();
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+	
+
+	@PostConstruct
+	private void carregarLista() {
+		list = uploadArquivoAula.lista();
+	}
+
 
 	public ArquivoUploadAula getArquivoUploadAula() {
 		return arquivoUploadAula;
@@ -104,6 +137,10 @@ public class UploadArquivoBean {
 	
 	public AlunoDao getAlunoDao() {
 		return alunoDao;
+	}
+	
+	public List<ArquivoUploadAula> getList() {
+		return list;
 	}
 
 

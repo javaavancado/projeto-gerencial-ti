@@ -16,8 +16,15 @@
  */
 package org.jboss.tools.example.springmvc.data.teste;
 
+import java.util.List;
+
 import org.jboss.tools.example.springmvc.model.teste.ArquivoUpload;
 
 public interface UploadDao {
+	
    void salvar (ArquivoUpload arquivoUpload) ;
+   
+   List<ArquivoUpload> lista();
+   
+   ArquivoUpload busca(Long id);
 }

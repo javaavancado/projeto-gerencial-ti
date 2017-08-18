@@ -33,14 +33,30 @@
 			</h:commandButton>
 
 		</p:panelGrid>
-
+		<h:dataTable value="#{uploadJsf.list}" var="file">
+			<h:column>
+				<h:outputText value="#{file.id}" />
+			</h:column>
+			
+			<h:column>
+				<h:outputText value="#{file.descricao}" />
+			</h:column>
+			
+			<h:column>
+				<h:commandLink immediate="true" 
+					actionListener="#{uploadJsf.download}" value="Download">
+				  <f:param name="fileDownloadId" value="#{file.id}"/>
+				</h:commandLink>
+			</h:column>
+		</h:dataTable>
 	</h:form>
-
+<!--  
 	<h:form>
 		<p:fileUpload id="uploadImagens" immediate="true"
 			fileUploadListener="#{uploadJsf.handleFileUpload}"
 			mode="advanced" multiple="true" dragDropSupport="true" label="Enviar"
 			auto="true" />
 	</h:form>
+-->	
 </body>
 </html>
