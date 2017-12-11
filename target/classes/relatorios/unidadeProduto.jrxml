@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="unidadeProduto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2d58bda-8d3f-40f2-a54d-a195a65fea9f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="sigla" class="java.lang.String">
+		<fieldDescription><![CDATA[sigla]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<title>
+		<band height="99" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="79" width="555" height="20" backcolor="#999999" uuid="a6054b31-01e8-4083-9e44-199d881c75a7"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="113" y="11" width="333" height="57" uuid="3b8fa73d-0a79-494a-a331-3e79831916e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="30"/>
+				</textElement>
+				<text><![CDATA[Unidade Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="79" width="100" height="20" uuid="db05855a-a7ff-4d14-8a33-5cd7fc91e02c"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="113" y="79" width="100" height="20" uuid="ed7f8b31-2d67-430e-a153-375e3a0d8188"/>
+				<text><![CDATA[Sigla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="79" width="268" height="20" uuid="05036566-6265-4420-9f74-2812808f1f58"/>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="21">
+			<textField>
+				<reportElement x="113" y="0" width="174" height="20" uuid="7aa9cfaf-f5f6-4d3d-b3ff-4bfbbfa7a30e"/>
+				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="113" height="20" uuid="0ce024db-817a-48fa-8cb6-45d723efd13b"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="287" y="0" width="268" height="20" uuid="7424f0b6-10c8-4b70-a656-28c3e6bf136b"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="1f2f7d82-9641-4c4d-803d-d45b280d0fe2"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

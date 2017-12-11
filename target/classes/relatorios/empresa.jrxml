@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="empresa" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="666695ac-c368-4eab-8578-23991d658ac6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[nome]]></fieldDescription>
+	</field>
+	<field name="responsavel" class="java.lang.String">
+		<fieldDescription><![CDATA[responsavel]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[status]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="ramo_de_atividade" class="java.lang.String">
+		<fieldDescription><![CDATA[ramo_de_atividade]]></fieldDescription>
+	</field>
+	<field name="tipoFiscal" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoFiscal]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="111" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="91" width="802" height="20" isPrintInFirstWholeBand="true" backcolor="#999999" uuid="328fcb02-b855-4536-bfd1-f8178e4f7090"/>
+				<graphicElement>
+					<pen lineWidth="0.0" lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="79" uuid="294931ce-cdff-4545-a9e0-c016d3956c20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="45"/>
+				</textElement>
+				<text><![CDATA[Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="91" width="100" height="20" uuid="30af2d8b-5567-4e7a-9cee-b87209dcf16a"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="91" width="100" height="20" uuid="1677017a-10e2-4d04-920d-7270942b5833"/>
+				<text><![CDATA[Responsável]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="91" width="108" height="20" uuid="76eedcf2-4a74-47bc-beb5-61b41672251e"/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="91" width="108" height="20" uuid="298e1da2-4df3-4ed5-acd7-3374d5068b94"/>
+				<text><![CDATA[Atividade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="649" y="91" width="108" height="20" uuid="5001cc4a-b9a9-4ec4-8ba1-06079f06a8eb"/>
+				<text><![CDATA[Fiscal]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="172" height="20" uuid="958bfe6e-49c3-462d-83a1-a8e1ad73d990"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="0" width="196" height="20" uuid="5f48a777-a1dc-4415-aeda-9bf6c262bd84"/>
+				<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="108" height="20" uuid="d3f5f08f-a707-4bcb-8b59-3f22f3113b88"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="476" y="0" width="173" height="20" uuid="c648f654-ae98-407d-a606-53065ed920e0"/>
+				<textFieldExpression><![CDATA[$F{ramo_de_atividade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="665" y="0" width="137" height="20" uuid="c552feda-ace0-41fa-b3e4-fb2c6c792ac6"/>
+				<textFieldExpression><![CDATA[$F{tipoFiscal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="23" width="802" height="1" uuid="e73eedca-dc54-4f36-8bfe-c12b5afad733"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
